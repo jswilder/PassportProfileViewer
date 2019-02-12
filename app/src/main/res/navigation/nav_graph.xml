@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/nav_graph"
+            app:startDestination="@id/profilesListFragment">
+
+    <fragment
+        android:id="@+id/profilesListFragment"
+        android:name="com.jwilder.passportprofileviewer.fragments.ProfilesListFragment"
+        android:label="Home"
+        tools:layout="@layout/profiles_list_fragment">
+        <action
+            android:id="@+id/action_profilesListFragment_to_profileViewFragment"
+            app:destination="@id/profileViewFragment" />
+        <action
+            android:id="@+id/action_profilesListFragment_to_newProfileFragment"
+            app:destination="@id/newProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newProfileFragment"
+        android:name="com.jwilder.passportprofileviewer.fragments.NewProfileFragment"
+        android:label="New Profile"
+        tools:layout="@layout/new_profile_fragment" />
+    <fragment
+        android:id="@+id/profileViewFragment"
+        android:name="com.jwilder.passportprofileviewer.fragments.ProfileViewFragment"
+        android:label="Profile View"
+        tools:layout="@layout/profile_view_fragment" />
+</navigation>
