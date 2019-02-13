@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "656064605161",
+    "firebase_url": "https://passport-e90fe.firebaseio.com",
+    "project_id": "passport-e90fe",
+    "storage_bucket": "passport-e90fe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:656064605161:android:4e232667cde973c6",
+        "android_client_info": {
+          "package_name": "com.jwilder.passportprofileviewer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "656064605161-fdd3fuuh2oh354kq7vh9eo6opm0o3v7s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0GgeWK_bhJczAufweOps4s0YEG3aWybQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

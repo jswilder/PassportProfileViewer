@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -34,7 +36,11 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.2-alpha01'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.2-alpha01'
-    def nav_version = "1.0.0-beta02"
-    implementation "android.arch.navigation:navigation-fragment:$nav_version"
-    implementation "android.arch.navigation:navigation-ui:$nav_version"
+    implementation "android.arch.navigation:navigation-fragment-ktx:$rootProject.nav_version"
+    implementation "android.arch.navigation:navigation-ui-ktx:$rootProject.nav_version"
+    implementation "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion"
+    implementation 'com.google.firebase:firebase-core:16.0.1'
+    kapt "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
 }
+
+apply plugin: 'com.google.gms.google-services'
