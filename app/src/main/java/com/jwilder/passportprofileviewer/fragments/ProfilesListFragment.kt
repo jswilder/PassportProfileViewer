@@ -40,8 +40,8 @@ class ProfilesListFragment : Fragment() {
             findNavController().navigate(R.id.action_profilesListFragment_to_newProfileFragment)
         }
 
-        btn_profile_view.setOnClickListener {
-            findNavController().navigate(R.id.action_profilesListFragment_to_profileViewFragment)
-        }
+//        btn_profile_view.setOnClickListener {
+//            findNavController().navigate(R.id.action_profilesListFragment_to_profileViewFragment)
+//        }
     }
 }
