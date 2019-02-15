@@ -13,10 +13,10 @@ class ProfilesListViewModel : ViewModel() {
 
     private val TAG = "PROFILES_VIEW_MODEL"
     private val mFireStore: FirebaseFirestore = FirebaseFirestore.getInstance() // The one we wanted...
-    private var profiles: MutableLiveData<List<Profile>> = MutableLiveData()
+    private var mProfiles: MutableLiveData<List<Profile>> = MutableLiveData()
 
     /*
-    Needed Indexes:
+    Needed Indexes/Indices:
         GENDER
             - Age ASC
             - Age DESC
@@ -48,7 +48,7 @@ class ProfilesListViewModel : ViewModel() {
                         Log.w(TAG,"Failed to convert.",e)
                     }
                 }
-                profiles.value = _profiles
+                mProfiles.value = _profiles
             }
             .addOnFailureListener{ exception ->
                 Log.w(TAG,"Error getting docs.",exception)

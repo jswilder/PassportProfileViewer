@@ -1,7 +1,5 @@
 package com.jwilder.passportprofileviewer.classes
 
-import android.graphics.Color
-import android.graphics.Color.rgb
 import com.google.firebase.database.Exclude
 import com.google.firebase.database.IgnoreExtraProperties
 import com.google.firebase.firestore.QueryDocumentSnapshot
