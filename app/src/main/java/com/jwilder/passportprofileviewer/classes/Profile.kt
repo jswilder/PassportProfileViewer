@@ -1,5 +1,7 @@
 package com.jwilder.passportprofileviewer.classes
 
+import android.graphics.Color
+import android.graphics.Color.rgb
 import com.google.firebase.database.Exclude
 import com.google.firebase.database.IgnoreExtraProperties
 import com.google.firebase.firestore.QueryDocumentSnapshot
@@ -30,9 +32,15 @@ data class Profile(
         gender = if(d.get("gender") as String == "male") GENDER.MALE else GENDER.FEMALE
     }
 
-    enum class GENDER(val gender: String){
+    enum class GENDER(private val gender: String){
         MALE("male"),
-        FEMALE("female")
+        FEMALE("female");
+
+        override fun toString(): String {
+            return this.gender
+        }
+
+        // TODO Add Colors to enum
     }
 
     @Exclude
