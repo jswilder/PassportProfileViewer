@@ -1,6 +1,7 @@
 package com.jwilder.passportprofileviewer.adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ class ProfileListAdapter internal constructor(context: Context, private val mode
 
     private val inflater : LayoutInflater = LayoutInflater.from(context)
     private var profiles = emptyList<Profile>()
+    private val TAG = "PROFILE_LIST_ADAPTER"
 
     inner class ProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val profileName: TextView = itemView.findViewById(R.id.text_profile_name)
@@ -32,8 +34,8 @@ class ProfileListAdapter internal constructor(context: Context, private val mode
         holder.profileName.text = current.name
         // TODO Change icon tint here
         holder.itemView.setOnClickListener {
-//            model.select(profiles[position])
-            // TODO Write the select method for profile view model
+            model.select(profiles[position])
+            Log.w(TAG,"${profiles[position].uid} + ${profiles[position].name}")
             it.findNavController().navigate(R.id.action_profilesListFragment_to_profileViewFragment)
         }
     }

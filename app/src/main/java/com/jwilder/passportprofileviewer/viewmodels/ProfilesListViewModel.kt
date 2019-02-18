@@ -13,7 +13,8 @@ class ProfilesListViewModel : ViewModel() {
 
     private val TAG = "PROFILES_VIEW_MODEL"
     private val mFireStore: FirebaseFirestore = FirebaseFirestore.getInstance() // The one we wanted...
-    private var mProfiles: MutableLiveData<List<Profile>> = MutableLiveData()
+    var mProfiles: MutableLiveData<List<Profile>> = MutableLiveData()
+    var mSelectedProfile = MutableLiveData<Profile>()
 
     /*
     Needed Indexes/Indices:
@@ -34,7 +35,7 @@ class ProfilesListViewModel : ViewModel() {
         val _profiles: MutableList<Profile> = ArrayList()
 
         val query = mFireStore.collection("Profiles")
-            .whereEqualTo("gender",Profile.GENDER.MALE.toString())
+//            .whereEqualTo("gender",Profile.GENDER.MALE.toString())
             .orderBy("uid", Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { result ->
@@ -53,5 +54,9 @@ class ProfilesListViewModel : ViewModel() {
             .addOnFailureListener{ exception ->
                 Log.w(TAG,"Error getting docs.",exception)
             }
+    }
+
+    fun select(profile: Profile) {
+        mSelectedProfile.value = profile
     }
 }
