@@ -36,7 +36,7 @@ class ProfilesListViewModel : ViewModel() {
 
         val query = mFireStore.collection("Profiles")
 //            .whereEqualTo("gender",Profile.GENDER.MALE.toString())
-            .orderBy("uid", Query.Direction.DESCENDING)
+            .orderBy("uid", Query.Direction.ASCENDING)
             .get()
             .addOnSuccessListener { result ->
                 for(document in result) {

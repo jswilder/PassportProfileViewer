@@ -35,8 +35,6 @@ class ProfilesListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-//        viewModel = ViewModelProviders.of(this).get(ProfilesListViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,19 +57,8 @@ class ProfilesListFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(recyclerView.context)
         recyclerView.addItemDecoration(divider)
 
-//        fab_new_profile.setOnClickListener {
-//            findNavController().navigate(R.id.action_profilesListFragment_to_profileViewFragment)
-//        }
-
-        /*
-        Correct FAB action
-         */
         fab_new_profile.setOnClickListener {
             findNavController().navigate(R.id.action_profilesListFragment_to_newProfileFragment)
         }
-
-//        btn_profile_view.setOnClickListener {
-//            findNavController().navigate(R.id.action_profilesListFragment_to_profileViewFragment)
-//        }
     }
 }
