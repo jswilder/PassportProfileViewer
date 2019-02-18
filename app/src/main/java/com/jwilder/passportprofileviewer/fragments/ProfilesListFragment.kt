@@ -37,8 +37,15 @@ class ProfilesListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         fab_new_profile.setOnClickListener {
-            findNavController().navigate(R.id.action_profilesListFragment_to_newProfileFragment)
+            findNavController().navigate(R.id.action_profilesListFragment_to_profileViewFragment)
         }
+
+        /*
+        Correct FAB action
+         */
+//        fab_new_profile.setOnClickListener {
+//            findNavController().navigate(R.id.action_profilesListFragment_to_newProfileFragment)
+//        }
 
 //        btn_profile_view.setOnClickListener {
 //            findNavController().navigate(R.id.action_profilesListFragment_to_profileViewFragment)
