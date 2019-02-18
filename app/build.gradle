@@ -45,6 +45,7 @@ dependencies {
     kapt "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

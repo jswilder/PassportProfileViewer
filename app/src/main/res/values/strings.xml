@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PassportProfileViewer</string>
+    <string name="desc_profile_image">Picture associated with this profile</string>
+    <string name="hobbies">Hobbies</string>
 </resources>
