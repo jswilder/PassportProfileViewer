@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item"
+    android:layout_width="match_parent"
+    android:layout_height="48dp">
+
+    <ImageView
+        android:id="@+id/image_person_icon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:contentDescription="@string/person_icon"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:tint="@color/maleBlue"
+        app:srcCompat="@drawable/ic_person" />
+
+    <TextView
+        android:id="@+id/text_profile_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="3"
+        android:paddingStart="16dp"
+        android:paddingEnd="1dp"
+        android:text=""
+        tools:text="Jeremy Wilder" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:srcCompat="@drawable/ic_arrow_right"
+        android:contentDescription="@string/right_arrow_icon" />
+
+</LinearLayout>

@@ -4,4 +4,6 @@
     <string name="hobbies">Hobbies</string>
     <string name="save">Save</string>
     <string name="delete">Delete</string>
+    <string name="person_icon">person icon</string>
+    <string name="right_arrow_icon">right arrow icon</string>
 </resources>
