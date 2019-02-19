@@ -108,15 +108,14 @@ class ProfilesListViewModel : ViewModel() {
         mSelectedProfile.value = profile
     }
 
-    fun submitChangesToDatabase() {
-        // TODO The only value that can change is hobbies, not the entire profile
-        var profile = mProfiles.value?.get(3)
-        profile?.age = profile?.age!!.plus(1)
-        val profileMap = mProfiles.value?.get(3)?.toMap()
-        mFireStore.collection(COLLECTION).document(profile.queryId!!)
-            .set({ profileMap })
-            .addOnSuccessListener { Log.d(TAG,"Document written successfully") }
-            .addOnFailureListener { e -> Log.w(TAG,"Error.",e) }
+    fun submitChangesToDatabase(newHobbies: String) {
+        if(mSelectedProfile.value != null) {
+            val data = HashMap<String,Any>()
+            data["hobbies"] = newHobbies
+            mFireStore.collection(COLLECTION)
+                .document(mSelectedProfile.value?.queryId!!)
+                .set(data, SetOptions.merge())
+        }
     }
 
     fun addNewProfileToDatabase(profile: Profile) {
@@ -136,9 +135,11 @@ class ProfilesListViewModel : ViewModel() {
             mFireStore.collection(COLLECTION)
                 .document(profile.queryId!!)
                 .delete()
-                .addOnSuccessListener { Log.d(TAG,"${profile.queryId} Deleted!") }
+                .addOnSuccessListener {
+                    Log.d(TAG,"${profile.queryId} Deleted!")
+                }
                 .addOnFailureListener { e ->
-                    Log.w(TAG,"Error deleting profile ${profile.queryId}")
+                    Log.w(TAG,"Error deleting profile ${profile.queryId}",e)
                 }
         }
     }

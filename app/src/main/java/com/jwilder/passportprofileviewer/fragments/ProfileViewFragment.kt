@@ -51,7 +51,7 @@ class ProfileViewFragment : Fragment() {
             }
         })
 
-//        button_save.setOnClickListener { viewModel.submitChangesToDatabase() }
+        button_save.setOnClickListener { viewModel.submitChangesToDatabase( edit_hobbies.text.toString() ) }
         button_delete.setOnClickListener { viewModel.deleteProfileFromDatabase(currentProfile) }
     }
 
