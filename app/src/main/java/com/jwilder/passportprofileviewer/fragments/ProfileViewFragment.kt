@@ -1,6 +1,7 @@
 package com.jwilder.passportprofileviewer.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +11,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 
 import com.jwilder.passportprofileviewer.R
-import com.jwilder.passportprofileviewer.R.color.femalePink
-import com.jwilder.passportprofileviewer.R.color.maleBlue
 import com.jwilder.passportprofileviewer.classes.Profile
 import com.jwilder.passportprofileviewer.viewmodels.ProfilesListViewModel
 import kotlinx.android.synthetic.main.profile_view_fragment.*
@@ -25,6 +24,7 @@ class ProfileViewFragment : Fragment() {
 
     private lateinit var viewModel: ProfilesListViewModel
     private lateinit var currentProfile: Profile
+    private val TAG = "PROFILE_VIEW_FRAG"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,14 +35,6 @@ class ProfileViewFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        /*
-            Jetpack data binding things
-         */
-//        val binding: ProfileViewFragmentBinding = DataBindingUtil.setContentView(
-//            activity!! , R.layout.profile_view_fragment)
-//
-//        binding.currentProfile = currentProfile
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -64,11 +56,10 @@ class ProfileViewFragment : Fragment() {
         text_name.text = profile.name
         text_age.text = profile.age.toString()
         val color = when(profile.gender) {
-            Profile.GENDER.MALE -> maleBlue
-            Profile.GENDER.FEMALE -> femalePink
+            Profile.GENDER.FEMALE -> ContextCompat.getColor(activity!!,R.color.femalePink)
+            Profile.GENDER.MALE -> ContextCompat.getColor(activity!!,R.color.maleBlue)
         }
-        // TODO Fix background color not changing
         view_background.setBackgroundColor(color)
+        Log.w(TAG,"$color : ${profile.gender}")
     }
-
 }
