@@ -16,7 +16,7 @@ class ProfilesListViewModel : ViewModel() {
     private val COLLECTION : String = "Profiles"
 
     private val mFireStore: FirebaseFirestore = FirebaseFirestore.getInstance()
-    var mProfiles: MutableLiveData<List<Profile>> = MutableLiveData()
+    var mProfiles: MutableLiveData<MutableList<Profile>> = MutableLiveData()
     var mSelectedProfile = MutableLiveData<Profile>()
 
     /*
@@ -35,6 +35,39 @@ class ProfilesListViewModel : ViewModel() {
 
     init {
         loadInitialValues()
+
+        mFireStore.collection(COLLECTION)
+            .addSnapshotListener { snapshot, e ->
+                if( e != null ) {
+                    Log.w(TAG, "Collection Listen Failed", e)
+                }
+
+                val profiles: MutableList<Profile> = ArrayList()
+
+                for(document in snapshot!!) {
+                    try {
+                        val item = Profile(document)
+                        profiles.add(item)
+                        Log.d(TAG,"$item")
+
+                        mFireStore.collection(COLLECTION).document(document.id)
+                            .addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
+                                if(firebaseFirestoreException != null) {
+                                    Log.w(TAG, "Listed failed.",firebaseFirestoreException)
+                                    return@addSnapshotListener
+                                }
+                                if(documentSnapshot != null && documentSnapshot.exists()) {
+                                    Log.d(TAG, "Current data: ${documentSnapshot.data}")
+                                } else {
+                                    Log.d(TAG, "Current data: NULL")
+                                }
+                            }
+                    } catch (e: Exception) {
+                        Log.w(TAG,"Failed to convert.",e)
+                    }
+                }
+                mProfiles.value = profiles
+            }
     }
 
     private fun loadInitialValues() {
@@ -50,13 +83,13 @@ class ProfilesListViewModel : ViewModel() {
                         Log.d(TAG,"$item")
 
                         mFireStore.collection(COLLECTION).document(document.id)
-                            .addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
-                                if(firebaseFirestoreException != null) {
-                                    Log.w(TAG, "Listed failed.",firebaseFirestoreException)
+                            .addSnapshotListener { snapshot, e ->
+                                if(e != null) {
+                                    Log.w(TAG, "Listed failed.",e)
                                     return@addSnapshotListener
                                 }
-                                if(documentSnapshot != null && documentSnapshot.exists()) {
-                                    Log.d(TAG, "Current data: ${documentSnapshot.data}")
+                                if(snapshot != null && snapshot.exists()) {
+                                    Log.d(TAG, "Current data: ${snapshot.data}")
                                 } else {
                                     Log.d(TAG, "Current data: NULL")
                                 }
