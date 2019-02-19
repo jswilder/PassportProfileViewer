@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ProfilesListFragment">
 
+    <include
+        android:id="@+id/include"
+        layout="@layout/recycler_list_header"
+        app:layout_constraintBottom_toTopOf="@+id/recycler_profiles"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_profiles"
         android:layout_width="0dp"
@@ -13,7 +21,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/include" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_new_profile"
@@ -24,6 +32,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:clickable="true"
+        android:focusable="true"
         android:src="@drawable/ic_add_person"
         android:tint="@android:color/white"
         app:backgroundTintMode="src_over"
@@ -32,7 +41,6 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        android:focusable="true" />
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

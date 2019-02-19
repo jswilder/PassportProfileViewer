@@ -22,6 +22,7 @@ class ProfileListAdapter internal constructor(val context: Context, private val 
 
     inner class ProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val profileName: TextView = itemView.findViewById(R.id.text_profile_name)
+        val profileAge: TextView = itemView.findViewById(R.id.text_profile_age)
         val profileGenderIcon: ImageView = itemView.findViewById(R.id.image_profile_gender_ic)
     }
 
@@ -33,6 +34,7 @@ class ProfileListAdapter internal constructor(val context: Context, private val 
     override fun onBindViewHolder(holder: ProfileViewHolder, position: Int) {
         val current = profiles[position]
         holder.profileName.text = current.name
+        holder.profileAge.text = current.age.toString()
         val color = when(current.gender) {
             Profile.GENDER.MALE -> ContextCompat.getColor(context,R.color.maleBlue)
             Profile.GENDER.FEMALE -> ContextCompat.getColor(context,R.color.femalePink)

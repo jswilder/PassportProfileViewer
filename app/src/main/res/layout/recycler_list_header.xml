@@ -1,44 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item"
     android:background="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/list_item_height">
+    android:layout_height="@dimen/list_item_height"
+    android:elevation="4dp"
+    >
 
-    <ImageView
-        android:id="@+id/image_profile_gender_ic"
+    <TextView
         style="@style/ListItemStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:contentDescription="@string/person_icon"
-        app:srcCompat="@drawable/ic_person" />
+        android:text="@string/m_f" />
 
     <TextView
-        android:id="@+id/text_profile_name"
         style="@style/ListItemStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="3"
-        tools:text="Jeremy Wilder" />
+        android:text="@string/name" />
 
     <TextView
-        android:id="@+id/text_profile_age"
         style="@style/ListItemStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        tools:text="999" />
+        android:text="@string/age" />
 
-    <ImageView
-        android:id="@+id/image_arrow"
+    <ImageButton
+        android:id="@+id/image_filter"
         style="@style/ListItemStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        app:srcCompat="@drawable/ic_arrow_right"
-        android:contentDescription="@string/right_arrow_icon" />
+        app:srcCompat="@drawable/ic_filter"
+        android:background="@color/white"
+        android:tint="@color/colorPrimaryDark"
+        android:contentDescription="@string/filter_icon" />
 
 </LinearLayout>

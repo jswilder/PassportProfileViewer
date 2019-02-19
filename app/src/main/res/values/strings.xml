@@ -8,4 +8,8 @@
     <string name="right_arrow_icon">right arrow icon</string>
     <string name="none">None</string>
     <string name="zero">0</string>
+    <string name="age">Age</string>
+    <string name="name">Name</string>
+    <string name="m_f">M/F</string>
+    <string name="filter_icon">filter icon</string>
 </resources>
