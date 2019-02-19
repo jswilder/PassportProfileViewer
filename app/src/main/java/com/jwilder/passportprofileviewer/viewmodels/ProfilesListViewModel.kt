@@ -52,7 +52,10 @@ class ProfilesListViewModel : ViewModel() {
 
     init {
         loadInitialValues()
+        setLiveUpdateListener()
+    }
 
+    private fun setLiveUpdateListener() {
         mFireStore.collection(COLLECTION)
             .addSnapshotListener { snapshot, e ->
                 if( e != null ) {
