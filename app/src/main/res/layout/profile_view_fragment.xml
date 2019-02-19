@@ -127,6 +127,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/button_delete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button_delete"
-        app:layout_constraintTop_toTopOf="@+id/button_delete" />
+        app:layout_constraintTop_toTopOf="@+id/button_delete"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

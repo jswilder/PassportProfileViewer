@@ -14,7 +14,7 @@ class ProfilesListViewModel : ViewModel() {
     private val TAG : String = "PROFILES_VIEW_MODEL"
     @Suppress("PrivatePropertyName")
     private val COLLECTION : String = "Profiles"
-    private val TIME: Long = 1548997200000 // Feb 1, 2019 in ms
+    private val TIME: Long = 1_548_997_200_000 // Feb 1, 2019 in ms
 
     private val mFireStore: FirebaseFirestore = FirebaseFirestore.getInstance()
     var mProfiles: MutableLiveData<MutableList<Profile>> = MutableLiveData()
@@ -81,7 +81,6 @@ class ProfilesListViewModel : ViewModel() {
                     try {
                         val item = Profile(document)
                         mProfiles.value?.add(mProfiles.value!!.size,item)
-//                        profiles.add(item)
                         Log.d(TAG,"$item")
                         mFireStore.collection(COLLECTION).document(document.id)
                             .addSnapshotListener { snapshot, e ->
@@ -99,7 +98,6 @@ class ProfilesListViewModel : ViewModel() {
                         Log.w(TAG,"Failed to convert.",e)
                     }
                 }
-//                mProfiles.value?.addAll(profiles)
             }
             .addOnFailureListener{ exception ->
                 Log.w(TAG,"Error getting docs.",exception)
@@ -134,6 +132,14 @@ class ProfilesListViewModel : ViewModel() {
     }
 
     fun deleteProfileFromDatabase(profile: Profile) {
-
+        if(profile.queryId != null) {
+            mFireStore.collection(COLLECTION)
+                .document(profile.queryId!!)
+                .delete()
+                .addOnSuccessListener { Log.d(TAG,"${profile.queryId} Deleted!") }
+                .addOnFailureListener { e ->
+                    Log.w(TAG,"Error deleting profile ${profile.queryId}")
+                }
+        }
     }
 }

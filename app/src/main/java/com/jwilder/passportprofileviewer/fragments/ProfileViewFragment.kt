@@ -22,9 +22,9 @@ class ProfileViewFragment : Fragment() {
         fun newInstance() = ProfileViewFragment()
     }
 
+    private val TAG = "PROFILE_VIEW_FRAG"
     private lateinit var viewModel: ProfilesListViewModel
     private lateinit var currentProfile: Profile
-    private val TAG = "PROFILE_VIEW_FRAG"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,6 +52,7 @@ class ProfileViewFragment : Fragment() {
         })
 
 //        button_save.setOnClickListener { viewModel.submitChangesToDatabase() }
+        button_delete.setOnClickListener { viewModel.deleteProfileFromDatabase(currentProfile) }
     }
 
     private fun updateUI(profile: Profile) {
@@ -61,6 +62,7 @@ class ProfileViewFragment : Fragment() {
             Profile.GENDER.FEMALE -> ContextCompat.getColor(activity!!,R.color.femalePink)
             Profile.GENDER.MALE -> ContextCompat.getColor(activity!!,R.color.maleBlue)
         }
+        edit_hobbies.setText(profile.hobbies)
         view_background.setBackgroundColor(color)
     }
 }
