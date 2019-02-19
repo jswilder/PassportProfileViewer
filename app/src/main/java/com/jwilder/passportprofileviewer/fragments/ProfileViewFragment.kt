@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 
 import com.jwilder.passportprofileviewer.R
 import com.jwilder.passportprofileviewer.classes.Profile
@@ -46,7 +47,7 @@ class ProfileViewFragment : Fragment() {
             ViewModelProviders.of(this).get(ProfilesListViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
 
-        viewModel.mSelectedProfile.observe( this, Observer { profile ->
+        viewModel.getSelectedProfile().observe( this, Observer { profile ->
             profile?.let {
                 currentProfile = profile
                 updateUI(currentProfile)
@@ -59,11 +60,23 @@ class ProfileViewFragment : Fragment() {
         /*
         Observe the save/delete buttons
          */
-        viewModel.mToastMessage.observe(this, Observer { result ->
-            if(result != null) {
+        viewModel.getToastMessage().observe(this, Observer { result ->
+            if(result != null && viewModel.getAttemptedAction() != ProfilesListViewModel.Actions.NONE) {
                 val toast = Toast.makeText(activity,result,Toast.LENGTH_SHORT)
                 toast.setGravity(Gravity.CENTER,0,0)
                 toast.show()
+//                when(viewModel.mActionAttempted) {
+//                    ProfilesListViewModel.Actions.NONE -> {}
+//                    ProfilesListViewModel.Actions.CREATE -> {}
+//                    ProfilesListViewModel.Actions.DELETE -> {
+                        // TODO Navigate up on success
+//                        viewModel.clearAction()
+//                        if(viewModel.mErrorOccured.value!!) {
+//                            view.findNavController().navigateUp()
+//                        }
+//                    }
+//                    ProfilesListViewModel.Actions.SAVE -> {}
+//                }
             }
         })
     }

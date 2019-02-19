@@ -49,7 +49,7 @@ class ProfilesListFragment : Fragment() {
 
         val adapter = ProfileListAdapter(context!!,viewModel)
 
-        viewModel.mProfiles.observe( this, Observer { profiles ->
+        viewModel.getAllProfiles().observe( this, Observer { profiles ->
             profiles?.let { adapter.setProfiles(profiles) }
         })
 
