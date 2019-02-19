@@ -6,4 +6,6 @@
     <string name="delete">Delete</string>
     <string name="person_icon">person icon</string>
     <string name="right_arrow_icon">right arrow icon</string>
+    <string name="none">None</string>
+    <string name="zero">0</string>
 </resources>

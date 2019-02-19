@@ -60,6 +60,5 @@ class ProfileViewFragment : Fragment() {
             Profile.GENDER.MALE -> ContextCompat.getColor(activity!!,R.color.maleBlue)
         }
         view_background.setBackgroundColor(color)
-        Log.w(TAG,"$color : ${profile.gender}")
     }
 }
