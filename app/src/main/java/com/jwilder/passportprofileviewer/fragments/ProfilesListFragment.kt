@@ -13,9 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.jwilder.passportprofileviewer.R
 import com.jwilder.passportprofileviewer.adapters.ProfileListAdapter
+import com.jwilder.passportprofileviewer.classes.Profile
 import com.jwilder.passportprofileviewer.viewmodels.ProfilesListViewModel
 import kotlinx.android.synthetic.main.profiles_list_fragment.*
 import java.lang.Exception
+import java.util.*
 
 class ProfilesListFragment : Fragment() {
 
@@ -58,7 +60,13 @@ class ProfilesListFragment : Fragment() {
         recyclerView.addItemDecoration(divider)
 
         fab_new_profile.setOnClickListener {
-            findNavController().navigate(R.id.action_profilesListFragment_to_newProfileFragment)
+            viewModel.addNewProfileToDatabase(Profile(
+                name = "Test${Date().time.div(1000)}",
+                uid = Date().time,
+                hobbies = "Testing Things",
+                age = 999
+            ))
+//            findNavController().navigate(R.id.action_profilesListFragment_to_newProfileFragment)
         }
     }
 }

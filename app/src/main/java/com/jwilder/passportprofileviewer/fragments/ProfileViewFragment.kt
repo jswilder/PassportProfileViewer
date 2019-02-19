@@ -51,7 +51,7 @@ class ProfileViewFragment : Fragment() {
             }
         })
 
-        button_save.setOnClickListener { viewModel.submitChangesToDatabase() }
+//        button_save.setOnClickListener { viewModel.submitChangesToDatabase() }
     }
 
     private fun updateUI(profile: Profile) {

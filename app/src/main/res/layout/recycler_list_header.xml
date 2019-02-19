@@ -36,8 +36,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         app:srcCompat="@drawable/ic_filter"
-        android:background="@color/white"
-        android:tint="@color/colorPrimaryDark"
         android:contentDescription="@string/filter_icon" />
 
 </LinearLayout>

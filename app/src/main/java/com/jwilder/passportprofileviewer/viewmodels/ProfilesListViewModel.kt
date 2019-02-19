@@ -3,8 +3,7 @@ package com.jwilder.passportprofileviewer.viewmodels
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.*
 import com.jwilder.passportprofileviewer.classes.Profile
 import java.lang.Exception
 import java.util.ArrayList
@@ -46,10 +45,22 @@ class ProfilesListViewModel : ViewModel() {
             .addOnSuccessListener { result ->
                 for(document in result) {
                     try {
-                        // TODO Convert to live data
                         val item = Profile(document)
                         profiles.add(item)
                         Log.d(TAG,"$item")
+
+                        mFireStore.collection(COLLECTION).document(document.id)
+                            .addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
+                                if(firebaseFirestoreException != null) {
+                                    Log.w(TAG, "Listed failed.",firebaseFirestoreException)
+                                    return@addSnapshotListener
+                                }
+                                if(documentSnapshot != null && documentSnapshot.exists()) {
+                                    Log.d(TAG, "Current data: ${documentSnapshot.data}")
+                                } else {
+                                    Log.d(TAG, "Current data: NULL")
+                                }
+                            }
                     } catch (e: Exception) {
                         Log.w(TAG,"Failed to convert.",e)
                     }
@@ -85,5 +96,9 @@ class ProfilesListViewModel : ViewModel() {
             .addOnFailureListener { exception ->
                 Log.w(TAG, "Error adding document.",exception)
             }
+    }
+
+    fun deleteProfileFromDatabase(profile: Profile) {
+
     }
 }
