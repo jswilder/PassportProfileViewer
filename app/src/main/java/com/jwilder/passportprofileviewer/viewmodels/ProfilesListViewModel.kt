@@ -17,8 +17,10 @@ class ProfilesListViewModel : ViewModel() {
     private val TIME: Long = 1_548_997_200_000 // Feb 1, 2019 in ms
 
     private val mFireStore: FirebaseFirestore = FirebaseFirestore.getInstance()
-    var mProfiles: MutableLiveData<MutableList<Profile>> = MutableLiveData()
-    var mSelectedProfile = MutableLiveData<Profile>()
+    val mProfiles: MutableLiveData<MutableList<Profile>> = MutableLiveData()
+    val mSelectedProfile = MutableLiveData<Profile>()
+    val mToastMessage = MutableLiveData<String>()
+    val mErrorOccured = MutableLiveData<Boolean>()
 
     /*
     Needed Indexes/Indices:
@@ -108,6 +110,11 @@ class ProfilesListViewModel : ViewModel() {
         mSelectedProfile.value = profile
     }
 
+    private fun setToastData(message: String, errorOccured: Boolean) {
+        mToastMessage.value = message
+        mErrorOccured.value = errorOccured
+    }
+
     fun submitChangesToDatabase(newHobbies: String) {
         if(mSelectedProfile.value != null) {
             val data = HashMap<String,Any>()
@@ -115,6 +122,13 @@ class ProfilesListViewModel : ViewModel() {
             mFireStore.collection(COLLECTION)
                 .document(mSelectedProfile.value?.queryId!!)
                 .set(data, SetOptions.merge())
+                .addOnSuccessListener {
+                    setToastData("Changes Saved",false)
+                }
+                .addOnFailureListener { e ->
+                    Log.w(TAG,"Changes failed to save.",e)
+                    setToastData("Save Failed",true)
+                }
         }
     }
 
@@ -124,9 +138,11 @@ class ProfilesListViewModel : ViewModel() {
             .add(profile.toMap())
             .addOnSuccessListener { documentReference ->
                 Log.d(TAG,"Document written with ID: ${documentReference.id}")
+                setToastData("Profile Added",false)
             }
             .addOnFailureListener { exception ->
                 Log.w(TAG, "Error adding document.",exception)
+                setToastData("Failed to add profile",true)
             }
     }
 
@@ -137,9 +153,11 @@ class ProfilesListViewModel : ViewModel() {
                 .delete()
                 .addOnSuccessListener {
                     Log.d(TAG,"${profile.queryId} Deleted!")
+                    setToastData("Profile deleted successfully",false)
                 }
                 .addOnFailureListener { e ->
                     Log.w(TAG,"Error deleting profile ${profile.queryId}",e)
+                    setToastData("Failed to delete profile",true)
                 }
         }
     }

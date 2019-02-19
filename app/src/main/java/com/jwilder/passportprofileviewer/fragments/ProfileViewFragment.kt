@@ -2,10 +2,12 @@ package com.jwilder.passportprofileviewer.fragments
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -53,6 +55,17 @@ class ProfileViewFragment : Fragment() {
 
         button_save.setOnClickListener { viewModel.submitChangesToDatabase( edit_hobbies.text.toString() ) }
         button_delete.setOnClickListener { viewModel.deleteProfileFromDatabase(currentProfile) }
+
+        /*
+        Observe the save/delete buttons
+         */
+        viewModel.mToastMessage.observe(this, Observer { result ->
+            if(result != null) {
+                val toast = Toast.makeText(activity,result,Toast.LENGTH_SHORT)
+                toast.setGravity(Gravity.CENTER,0,0)
+                toast.show()
+            }
+        })
     }
 
     private fun updateUI(profile: Profile) {
