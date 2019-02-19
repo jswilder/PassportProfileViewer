@@ -37,18 +37,15 @@ data class Profile(
         override fun toString(): String {
             return this.gender
         }
-
-        // TODO Add Colors to enum
     }
 
     @Exclude
     fun toMap(): Map<String, Any?> {
         return mapOf(
-            "id" to queryId,
             "name" to name,
             "hobbies" to hobbies,
             "image" to image,
-            "gender" to gender,
+            "gender" to gender.toString(),
             "uid" to uid,
             "age" to age
         )

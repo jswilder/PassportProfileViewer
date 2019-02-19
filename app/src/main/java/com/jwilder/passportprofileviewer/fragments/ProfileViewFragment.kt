@@ -50,6 +50,8 @@ class ProfileViewFragment : Fragment() {
                 updateUI(currentProfile)
             }
         })
+
+        button_save.setOnClickListener { viewModel.submitChangesToDatabase() }
     }
 
     private fun updateUI(profile: Profile) {

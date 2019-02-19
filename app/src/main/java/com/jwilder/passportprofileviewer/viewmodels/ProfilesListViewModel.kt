@@ -11,8 +11,12 @@ import java.util.ArrayList
 
 class ProfilesListViewModel : ViewModel() {
 
-    private val TAG = "PROFILES_VIEW_MODEL"
-    private val mFireStore: FirebaseFirestore = FirebaseFirestore.getInstance() // The one we wanted...
+    @Suppress("PrivatePropertyName")
+    private val TAG : String = "PROFILES_VIEW_MODEL"
+    @Suppress("PrivatePropertyName")
+    private val COLLECTION : String = "Profiles"
+
+    private val mFireStore: FirebaseFirestore = FirebaseFirestore.getInstance()
     var mProfiles: MutableLiveData<List<Profile>> = MutableLiveData()
     var mSelectedProfile = MutableLiveData<Profile>()
 
@@ -31,11 +35,12 @@ class ProfilesListViewModel : ViewModel() {
      */
 
     init {
-        // Load the initial profiles
-        val _profiles: MutableList<Profile> = ArrayList()
+        loadInitialValues()
+    }
 
-        val query = mFireStore.collection("Profiles")
-//            .whereEqualTo("gender",Profile.GENDER.MALE.toString())
+    private fun loadInitialValues() {
+        val profiles: MutableList<Profile> = ArrayList()
+        mFireStore.collection(COLLECTION)
             .orderBy("uid", Query.Direction.ASCENDING)
             .get()
             .addOnSuccessListener { result ->
@@ -43,13 +48,13 @@ class ProfilesListViewModel : ViewModel() {
                     try {
                         // TODO Convert to live data
                         val item = Profile(document)
-                        _profiles.add(item)
+                        profiles.add(item)
                         Log.d(TAG,"$item")
                     } catch (e: Exception) {
                         Log.w(TAG,"Failed to convert.",e)
                     }
                 }
-                mProfiles.value = _profiles
+                mProfiles.value = profiles
             }
             .addOnFailureListener{ exception ->
                 Log.w(TAG,"Error getting docs.",exception)
@@ -58,5 +63,27 @@ class ProfilesListViewModel : ViewModel() {
 
     fun select(profile: Profile) {
         mSelectedProfile.value = profile
+    }
+
+    fun submitChangesToDatabase() {
+        // TODO The only value that can change is hobbies, not the entire profile
+        var profile = mProfiles.value?.get(3)
+        profile?.age = profile?.age!!.plus(1)
+        val profileMap = mProfiles.value?.get(3)?.toMap()
+        mFireStore.collection(COLLECTION).document(profile.queryId!!)
+            .set({ profileMap })
+            .addOnSuccessListener { Log.d(TAG,"Document written successfully") }
+            .addOnFailureListener { e -> Log.w(TAG,"Error.",e) }
+    }
+
+    fun addNewProfileToDatabase(profile: Profile) {
+        mFireStore.collection(COLLECTION)
+            .add(profile.toMap())
+            .addOnSuccessListener { documentReference ->
+                Log.d(TAG,"Document written with ID: ${documentReference.id}")
+            }
+            .addOnFailureListener { exception ->
+                Log.w(TAG, "Error adding document.",exception)
+            }
     }
 }
