@@ -64,7 +64,9 @@ class ProfilesListFragment : Fragment() {
                 name = "Test${Date().time.div(1000)}",
                 uid = Date().time,
                 hobbies = "Testing Things",
-                age = 999
+                age = Math.abs(Random().nextLong() % 87),
+                image = "none",
+                gender = if( Random().nextBoolean() ) Profile.GENDER.MALE else Profile.GENDER.FEMALE
             ))
 //            findNavController().navigate(R.id.action_profilesListFragment_to_newProfileFragment)
         }

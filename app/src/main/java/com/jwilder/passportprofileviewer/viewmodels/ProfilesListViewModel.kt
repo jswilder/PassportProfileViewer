@@ -14,6 +14,7 @@ class ProfilesListViewModel : ViewModel() {
     private val TAG : String = "PROFILES_VIEW_MODEL"
     @Suppress("PrivatePropertyName")
     private val COLLECTION : String = "Profiles"
+    private val TIME: Long = 1548997200000 // Feb 1, 2019 in ms
 
     private val mFireStore: FirebaseFirestore = FirebaseFirestore.getInstance()
     var mProfiles: MutableLiveData<MutableList<Profile>> = MutableLiveData()
@@ -79,9 +80,9 @@ class ProfilesListViewModel : ViewModel() {
                 for(document in result) {
                     try {
                         val item = Profile(document)
-                        profiles.add(item)
+                        mProfiles.value?.add(mProfiles.value!!.size,item)
+//                        profiles.add(item)
                         Log.d(TAG,"$item")
-
                         mFireStore.collection(COLLECTION).document(document.id)
                             .addSnapshotListener { snapshot, e ->
                                 if(e != null) {
@@ -98,7 +99,7 @@ class ProfilesListViewModel : ViewModel() {
                         Log.w(TAG,"Failed to convert.",e)
                     }
                 }
-                mProfiles.value = profiles
+//                mProfiles.value?.addAll(profiles)
             }
             .addOnFailureListener{ exception ->
                 Log.w(TAG,"Error getting docs.",exception)
@@ -121,6 +122,7 @@ class ProfilesListViewModel : ViewModel() {
     }
 
     fun addNewProfileToDatabase(profile: Profile) {
+        profile.uid = profile.uid - TIME
         mFireStore.collection(COLLECTION)
             .add(profile.toMap())
             .addOnSuccessListener { documentReference ->
