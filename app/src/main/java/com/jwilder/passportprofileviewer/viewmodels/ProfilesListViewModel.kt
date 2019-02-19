@@ -142,6 +142,7 @@ class ProfilesListViewModel : ViewModel() {
                 .document(mSelectedProfile.value?.queryId!!)
                 .set(data, SetOptions.merge())
                 .addOnSuccessListener {
+                    mSelectedProfile.value?.hobbies = newHobbies
                     setToastData("Changes Saved",false, Actions.SAVE)
                 }
                 .addOnFailureListener { e ->
@@ -173,6 +174,7 @@ class ProfilesListViewModel : ViewModel() {
                 .addOnSuccessListener {
                     Log.d(TAG,"${profile.queryId} Deleted!")
                     setToastData("Profile deleted successfully",false, Actions.DELETE)
+                    // TODO Disable "save" button when delete succeeds
                 }
                 .addOnFailureListener { e ->
                     Log.w(TAG,"Error deleting profile ${profile.queryId}",e)
