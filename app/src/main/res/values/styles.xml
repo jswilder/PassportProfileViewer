@@ -55,4 +55,8 @@
         <item name="android:fontFamily">@font/roboto_mono</item>
     </style>
 
+    <style name="TextInputLayoutStyle" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" />
+
+    <style name="TextInputEditTextStyle" parent="@style/ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox" />
+
 </resources>
