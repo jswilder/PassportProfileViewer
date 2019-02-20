@@ -60,15 +60,15 @@ class ProfilesListFragment : Fragment() {
         recyclerView.addItemDecoration(divider)
 
         fab_new_profile.setOnClickListener {
-            viewModel.addNewProfileToDatabase(Profile(
-                name = "Test${Date().time.div(1000)}",
-                uid = Date().time,
-                hobbies = "Testing Things",
-                age = Math.abs(Random().nextLong() % 87),
-                image = "none",
-                gender = if( Random().nextBoolean() ) Profile.GENDER.MALE else Profile.GENDER.FEMALE
-            ))
-//            findNavController().navigate(R.id.action_profilesListFragment_to_newProfileFragment)
+//            viewModel.addNewProfileToDatabase(Profile(
+//                name = "Test${Date().time.div(1000)}",
+//                uid = Date().time,
+//                hobbies = "Testing Things",
+//                age = Math.abs(Random().nextLong() % 87),
+//                image = "none",
+//                gender = if( Random().nextBoolean() ) Profile.GENDER.MALE else Profile.GENDER.FEMALE
+//            ))
+            findNavController().navigate(R.id.action_profilesListFragment_to_newProfileFragment)
         }
     }
 }

@@ -5,8 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProviders
 
 import com.jwilder.passportprofileviewer.R
+import com.jwilder.passportprofileviewer.viewmodels.ProfilesListViewModel
+import java.lang.Exception
 
 class NewProfileFragment : Fragment() {
 
@@ -14,7 +17,7 @@ class NewProfileFragment : Fragment() {
         fun newInstance() = NewProfileFragment()
     }
 
-//    private lateinit var viewModel: NewProfileViewModel
+    private lateinit var viewModel: ProfilesListViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,7 +28,13 @@ class NewProfileFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-//        viewModel = ViewModelProviders.of(this).get(NewProfileViewModel::class.java)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel = activity?.run {
+            ViewModelProviders.of(this).get(ProfilesListViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
+    }
 }
