@@ -99,7 +99,8 @@ class ProfilesListViewModel : ViewModel() {
                 for(document in result) {
                     try {
                         val item = Profile(document)
-                        mProfiles.value?.add(mProfiles.value!!.size,item)
+//                        mProfiles.value?.add(mProfiles.value!!.size,item)
+                        mProfiles.value?.add(item)
                         Log.d(TAG,"$item")
                         mFireStore.collection(COLLECTION).document(document.id)
                             .addSnapshotListener { snapshot, e ->
