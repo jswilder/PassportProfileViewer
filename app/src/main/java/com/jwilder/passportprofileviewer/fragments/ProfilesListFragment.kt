@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -16,6 +17,7 @@ import com.jwilder.passportprofileviewer.adapters.ProfileListAdapter
 import com.jwilder.passportprofileviewer.classes.Profile
 import com.jwilder.passportprofileviewer.viewmodels.ProfilesListViewModel
 import kotlinx.android.synthetic.main.profiles_list_fragment.*
+import kotlinx.android.synthetic.main.recycler_list_header.*
 import java.lang.Exception
 import java.util.*
 
@@ -60,15 +62,19 @@ class ProfilesListFragment : Fragment() {
         recyclerView.addItemDecoration(divider)
 
         fab_new_profile.setOnClickListener {
-//            viewModel.addNewProfileToDatabase(Profile(
-//                name = "Test${Date().time.div(1000)}",
-//                uid = Date().time,
-//                hobbies = "Testing Things",
-//                age = Math.abs(Random().nextLong() % 87),
-//                image = "none",
-//                gender = if( Random().nextBoolean() ) Profile.GENDER.MALE else Profile.GENDER.FEMALE
-//            ))
             findNavController().navigate(R.id.action_profilesListFragment_to_newProfileFragment)
+        }
+
+        text_filter_gender.setOnClickListener {
+            Toast.makeText(context,"Gender filter clicked",Toast.LENGTH_SHORT).show()
+        }
+
+        text_sort_age.setOnClickListener {
+            Toast.makeText(context,"Age sort clicked",Toast.LENGTH_SHORT).show()
+        }
+
+        text_sort_name.setOnClickListener {
+            Toast.makeText(context,"Name sort clicked",Toast.LENGTH_SHORT).show()
         }
     }
 }
