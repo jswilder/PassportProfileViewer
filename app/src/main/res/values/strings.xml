@@ -16,6 +16,7 @@
     <string name="image">Image</string>
     <string name="cancel">Cancel</string>
     <string name="discard">Discard</string>
+    <string name="id">ID</string>
     <string-array
         name="string_array_genders">
         <item>male</item>

@@ -64,17 +64,5 @@ class ProfilesListFragment : Fragment() {
         fab_new_profile.setOnClickListener {
             findNavController().navigate(R.id.action_profilesListFragment_to_newProfileFragment)
         }
-
-        text_filter_gender.setOnClickListener {
-            Toast.makeText(context,"Gender filter clicked",Toast.LENGTH_SHORT).show()
-        }
-
-        text_sort_age.setOnClickListener {
-            Toast.makeText(context,"Age sort clicked",Toast.LENGTH_SHORT).show()
-        }
-
-        text_sort_name.setOnClickListener {
-            Toast.makeText(context,"Name sort clicked",Toast.LENGTH_SHORT).show()
-        }
     }
 }

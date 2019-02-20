@@ -15,7 +15,7 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent=".4" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/image_profile_picture"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -28,7 +28,7 @@
         app:srcCompat="@drawable/passport"
         tools:src="@tools:sample/avatars" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_name"
         style="@style/TextProfileHeaderStyle"
         android:layout_width="0dp"
@@ -43,7 +43,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Jeremy Wilder" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_age"
         style="@style/TextProfileHeaderStyle"
         android:layout_width="wrap_content"
@@ -57,7 +57,7 @@
         app:layout_constraintTop_toTopOf="@+id/text_name"
         tools:text="99" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_hobbies_label"
         style="@style/TextProfileSubheaderStyle"
         android:layout_width="0dp"
@@ -94,26 +94,28 @@
             tools:text="Hiking, Canoeing, Gaming, Etc, Shamming, Shamming, Shamming, Shamming," />
     </FrameLayout>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_delete"
-        style="@style/ButtonProfileStyle"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         android:text="@string/delete"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_save"
         app:layout_constraintStart_toStartOf="@+id/text_hobbies_label" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_save"
-        style="@style/ButtonProfileStyle"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="16dp"
         android:text="@string/save"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/text_age"
         app:layout_constraintStart_toEndOf="@+id/button_delete" />
