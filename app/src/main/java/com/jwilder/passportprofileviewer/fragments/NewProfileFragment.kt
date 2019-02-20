@@ -8,8 +8,11 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 
 import com.jwilder.passportprofileviewer.R
+import com.jwilder.passportprofileviewer.classes.Profile
 import com.jwilder.passportprofileviewer.viewmodels.ProfilesListViewModel
+import kotlinx.android.synthetic.main.new_profile_fragment.*
 import java.lang.Exception
+import java.util.*
 
 class NewProfileFragment : Fragment() {
 
@@ -36,5 +39,19 @@ class NewProfileFragment : Fragment() {
         viewModel = activity?.run {
             ViewModelProviders.of(this).get(ProfilesListViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
+
+        button_save.setOnClickListener {
+            viewModel.addNewProfileToDatabase(getProfileFromInputs())
+        }
+    }
+
+    private fun getProfileFromInputs() : Profile {
+        val name = if (text_input_name.text.toString() != "") text_input_name.text.toString() else "None"
+        val hobbies = if (text_input_hobbies.text.toString() != "") text_input_hobbies.text.toString() else "None"
+        val age = if (text_input_age.text.toString() != "") text_input_age.text.toString().toLong() else 0 as Long
+        val image = if (text_input_image.text.toString() != "") text_input_image.text.toString() else "None"
+        val gender = if ( spinner_gender.selectedItem.toString() == "male" ) Profile.GENDER.MALE else Profile.GENDER.FEMALE
+        val uid = Date().time
+        return Profile(name = name, hobbies = hobbies, age = age, image = image, gender = gender, uid = uid)
     }
 }

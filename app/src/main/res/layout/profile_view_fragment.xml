@@ -101,29 +101,33 @@
             tools:text="Hiking, Canoeing, Gaming, Etc, Shamming, Shamming, Shamming, Shamming," />
     </FrameLayout>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_delete"
-        style="@style/ButtonProfileStyle"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
+        app:icon="@drawable/ic_delete"
         android:text="@string/delete"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_save"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frame_hobbies" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_save"
-        style="@style/ButtonProfileStyle"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="16dp"
         android:text="@string/save"
+        app:icon="@drawable/ic_save"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
         app:layout_constraintBottom_toBottomOf="@+id/button_delete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button_delete"

@@ -14,6 +14,8 @@
     <string name="age">Age</string>
     <string name="gender">Gender</string>
     <string name="image">Image</string>
+    <string name="cancel">Cancel</string>
+    <string name="discard">Discard</string>
     <string-array
         name="string_array_genders">
         <item>male</item>

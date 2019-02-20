@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         android:hint="@string/age"
         app:layout_constraintBottom_toTopOf="@+id/layout_hobbies"
@@ -49,12 +49,11 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/text_input_age"
+            style="TextInputEditTextStyle"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            style="TextInputEditTextStyle"
             android:inputType="numberDecimal"
-            android:maxLines="1"
-            />
+            android:maxLines="1" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -63,7 +62,7 @@
         style="@style/Base.Widget.AppCompat.Spinner.Underlined"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:entries="@array/string_array_genders"
@@ -76,17 +75,14 @@
         android:id="@+id/layout_hobbies"
         style="TextInputLayoutStyle"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="54dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="32dp"
         android:hint="@string/hobbies"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_age"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/layout_age">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/text_input_hobbies"
@@ -96,5 +92,73 @@
             android:inputType="textShortMessage" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_image_source"
+        style="TextInputLayoutStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:hint="@string/image"
+        app:layout_constraintBottom_toTopOf="@+id/image_preview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_hobbies">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/text_input_image"
+            style="TextInputEditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textShortMessage" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/image_preview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/passport"
+        app:layout_constraintBottom_toTopOf="@+id/button_discard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_image_source" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_discard"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/discard"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
+        app:icon="@drawable/ic_cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_save"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_save"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/save"
+        app:icon="@drawable/ic_save"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Colored"
+        app:layout_constraintBottom_toBottomOf="@+id/button_discard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_discard"
+        app:layout_constraintTop_toTopOf="@+id/button_discard" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
