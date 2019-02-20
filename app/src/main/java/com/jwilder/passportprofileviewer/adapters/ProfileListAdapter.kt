@@ -24,6 +24,7 @@ class ProfileListAdapter internal constructor(val context: Context, private val 
         val profileName: TextView = itemView.findViewById(R.id.text_profile_name)
         val profileAge: TextView = itemView.findViewById(R.id.text_profile_age)
         val profileGenderIcon: ImageView = itemView.findViewById(R.id.image_profile_gender_ic)
+        val profileId: TextView = itemView.findViewById(R.id.text_profile_id)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileViewHolder {
@@ -35,6 +36,7 @@ class ProfileListAdapter internal constructor(val context: Context, private val 
         val current = profiles[position]
         holder.profileName.text = current.name
         holder.profileAge.text = current.age.toString()
+        holder.profileId.text = current.uid.toString()
         val color = when(current.gender) {
             Profile.GENDER.MALE -> ContextCompat.getColor(context,R.color.maleBlue)
             Profile.GENDER.FEMALE -> ContextCompat.getColor(context,R.color.femalePink)
