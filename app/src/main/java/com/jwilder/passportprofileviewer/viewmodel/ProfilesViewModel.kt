@@ -15,7 +15,7 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
 
     private val TAG : String = "ProfilesViewModel"
     private val COLLECTION : String = "Profiles"
-    private val TIME: Long = 1_548_997_200_000         // Feb 1, 2019 in ms
+    private val TIME: Long = 1_548_997_200_000         // Feb 1, 2019 in ms; Used to shorten Uid length
 
     /*  Observable Fields   */
     private val mProfiles: MutableLiveData<MutableList<Profile>> = MutableLiveData()
@@ -31,14 +31,28 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
     private lateinit var mField: Field
     private lateinit var mDirection: Query.Direction
 
-    fun getSelectedProfile() = mSelectedProfile
-    fun getProfiles() = mProfiles
-
     init {
         setDefaultsFilterSort()
         mQuery = buildQuery()
         mRegistration = ListenerRegistration {  }
         queryProfiles()
+    }
+
+    fun getSelectedProfile() = mSelectedProfile
+    fun getProfiles() = mProfiles
+
+    fun getFilterLabel() : String {
+        // TODO Get string resource working for better internationalization
+        return when(mGender) {
+            Filter.DEFAULT -> "MF" // getApplication<Application>().resources.getString(R.string.mf)
+            Filter.FEMALE -> "F"
+            Filter.MALE -> "M"
+        }
+    }
+
+    fun getFieldLabel() : String {
+        val arrow = if(mDirection == Query.Direction.ASCENDING) "\u2191" else "\u2193"
+        return "$arrow ${mField.field}"
     }
 
     fun setDefaultsFilterSort() {
@@ -69,20 +83,6 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    fun getFilterLabel() : String {
-        // TODO Get string resource working for better internationalization
-        return when(mGender) {
-            Filter.DEFAULT -> "MF" // getApplication<Application>().resources.getString(R.string.mf)
-            Filter.FEMALE -> "F"
-            Filter.MALE -> "M"
-        }
-    }
-
-    fun getFieldLabel() : String {
-        val arrow = if(mDirection == Query.Direction.ASCENDING) "\u2191" else "\u2193"
-        return "$arrow ${mField.field}"
-    }
-
     private fun buildQuery() : Query {
         return when(mGender) {
             Filter.DEFAULT -> mFireStore.orderBy(mField.toString(),mDirection)
@@ -105,7 +105,7 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
                     mFireStore.document(document.id)
                         .addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
                             if(firebaseFirestoreException != null) {
-                                Log.w(TAG, "Listed failed.",firebaseFirestoreException)
+                                Log.w(TAG, "Listen failed.",firebaseFirestoreException)
                                 return@addSnapshotListener
                             }
                             if(documentSnapshot != null && documentSnapshot.exists()) {
@@ -122,15 +122,13 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    fun submitProfileChangeDB(newHobbies: String) {
+    fun submitProfileChangeDB(hobbies: String) {
         if(mSelectedProfile.value != null) {
-            val data = HashMap<String,Any>()
-            data["hobbies"] = newHobbies
             mFireStore
                 .document(mSelectedProfile.value?.queryId!!)
-                .set(data, SetOptions.merge())
+                .set(mapOf("hobbies" to hobbies), SetOptions.merge())
                 .addOnSuccessListener {
-                    mSelectedProfile.value?.hobbies = newHobbies
+                    mSelectedProfile.value?.hobbies = hobbies
                 }
                 .addOnFailureListener { e ->
                     Log.w(TAG,"Changes failed to save.",e)
@@ -156,7 +154,7 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
                 .document(profile.queryId!!)
                 .delete()
                 .addOnSuccessListener {
-                    Log.d(TAG,"${profile.queryId} Deleted!")
+                    Log.d(TAG,"${profile.queryId} deleted")
                     // TODO Disable "save" button when delete succeeds
                 }
                 .addOnFailureListener { e ->

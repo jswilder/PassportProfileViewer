@@ -14,7 +14,7 @@ import com.jwilder.passportprofileviewer.R
 import com.jwilder.passportprofileviewer.classes.Profile
 import com.jwilder.passportprofileviewer.viewmodel.ProfilesViewModel
 
-class ProfileListAdapter internal constructor(val context: Context, private val model: ProfilesViewModel) : RecyclerView.Adapter<ProfileListAdapter.ProfileViewHolder>() {
+class ProfileListAdapter internal constructor(private val context: Context, private val model: ProfilesViewModel) : RecyclerView.Adapter<ProfileListAdapter.ProfileViewHolder>() {
 
     @Suppress("PrivatePropertyName")
     private val TAG = "ProfileListAdapter"
