@@ -13,8 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.jwilder.passportprofileviewer.R
 import com.jwilder.passportprofileviewer.adapter.ProfileListAdapter
-import com.jwilder.passportprofileviewer.classes.Filter
-import com.jwilder.passportprofileviewer.classes.Sort
+import com.jwilder.passportprofileviewer.classes.Field
 import com.jwilder.passportprofileviewer.viewmodel.ProfilesViewModel
 import kotlinx.android.synthetic.main.profiles_list_fragment.*
 import kotlinx.android.synthetic.main.recycler_filter_header.*
@@ -26,8 +25,10 @@ class ProfilesListFragment : Fragment() {
         fun newInstance() = ProfilesListFragment()
     }
 
+    private val TAG = "ProfileListFragment"
     private lateinit var mViewModel: ProfilesViewModel
     private lateinit var mDivider: DividerItemDecoration
+    private lateinit var mAdapter: ProfileListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,45 +44,47 @@ class ProfilesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val recyclerView = recycler_profiles
         mViewModel = activity?.run {
             ViewModelProviders.of(this).get(ProfilesViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
 
-        val adapter = ProfileListAdapter(context!!,mViewModel)
-
+        mDivider = DividerItemDecoration(context,1)
+        mAdapter = ProfileListAdapter(context!!,mViewModel)
         mViewModel.getProfiles().observe( this, Observer { profiles ->
-            profiles?.let { adapter.setProfiles(profiles) }
+            profiles?.let { mAdapter.setProfiles(profiles) }
         })
 
-        mDivider = DividerItemDecoration(context,1)
-
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(recyclerView.context)
-        recyclerView.addItemDecoration(mDivider)
+        recycler_profiles.adapter = mAdapter
+        recycler_profiles.layoutManager = LinearLayoutManager(recycler_profiles.context)
+        recycler_profiles.addItemDecoration(mDivider)
 
         fab_new_profile.setOnClickListener {
             findNavController().navigate(R.id.action_profilesListFragment_to_newProfileFragment)
         }
 
         text_id.setOnClickListener {
-            mViewModel.applyFilterAndSort(Filter.DEFAULT, Sort.UID_ASC)
+            mViewModel.setSortField(Field.UID)
+            mViewModel.applyFilterAndSort()
         }
 
         text_name.setOnClickListener {
-            mViewModel.applyFilterAndSort(Filter.DEFAULT,Sort.NAME_ASC)
+            mViewModel.setSortField(Field.NAME)
+            mViewModel.applyFilterAndSort()
         }
 
         text_gender.setOnClickListener {
-            mViewModel.applyFilterAndSort(Filter.FEMALE,Sort.DEFAULT)
+            mViewModel.setGenderFilter()
+            mViewModel.applyFilterAndSort()
         }
 
         text_age.setOnClickListener {
-            mViewModel.applyFilterAndSort(Filter.DEFAULT,Sort.AGE_ASC)
+            mViewModel.setSortField(Field.AGE)
+            mViewModel.applyFilterAndSort()
         }
 
         image_clear_filter.setOnClickListener {
-            mViewModel.applyFilterAndSort(Filter.DEFAULT,Sort.DEFAULT)
+            mViewModel.setDefaults()
+            mViewModel.applyFilterAndSort()
         }
     }
 }

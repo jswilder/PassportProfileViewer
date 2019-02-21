@@ -20,6 +20,7 @@ class NewProfileFragment : Fragment() {
         fun newInstance() = NewProfileFragment()
     }
 
+    private val TAG = "NewProfileFragment"
     private lateinit var mViewModel: ProfilesViewModel
 
     override fun onCreateView(

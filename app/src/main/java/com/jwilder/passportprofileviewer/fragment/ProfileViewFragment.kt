@@ -21,7 +21,7 @@ class ProfileViewFragment : Fragment() {
         fun newInstance() = ProfileViewFragment()
     }
 
-    private val TAG = "PROFILE_VIEW_FRAG"
+    private val TAG = "ProfileViewFragment"
     private lateinit var mViewModel: ProfilesViewModel
     private lateinit var mSelectedProfile: Profile
 
@@ -50,8 +50,13 @@ class ProfileViewFragment : Fragment() {
             }
         })
 
-        button_save.setOnClickListener { mViewModel.submitChangesToDatabase( edit_hobbies.text.toString() ) }
-        button_delete.setOnClickListener { mViewModel.deleteProfileFromDatabase(mSelectedProfile) }
+        button_save.setOnClickListener {
+            mViewModel.submitChangesToDatabase( edit_hobbies.text.toString() )
+        }
+
+        button_delete.setOnClickListener {
+            mViewModel.deleteProfileFromDatabase(mSelectedProfile)
+        }
     }
 
     private fun updateUI(profile: Profile) {

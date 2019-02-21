@@ -4,9 +4,9 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.*
+import com.jwilder.passportprofileviewer.classes.Field
 import com.jwilder.passportprofileviewer.classes.Filter
 import com.jwilder.passportprofileviewer.classes.Profile
-import com.jwilder.passportprofileviewer.classes.Sort
 import com.jwilder.passportprofileviewer.database.Database
 import java.lang.Exception
 
@@ -36,18 +36,51 @@ class ProfilesViewModel : ViewModel() {
     private lateinit var mQuery : Query
     private lateinit var mRegistration: ListenerRegistration
 
+    /*
+        Sorting / Filtering
+     */
+    private lateinit var mGender: Filter
+    private lateinit var mField: Field
+    private lateinit var mDirection: Query.Direction
+
+
     fun getSelectedProfile() = mSelectedProfile
     fun getProfiles() = mProfiles
 
     init {
-        setDefaultsAndLoadData()
+        setDefaults()
+        loadInitialData()
     }
 
-    fun applyFilterAndSort(filter: Filter, sort: Sort) {
+    fun setDefaults() {
+        mGender = Filter.DEFAULT
+        mField = Field.UID
+        mDirection = Query.Direction.ASCENDING
+    }
+
+    fun setSortField(field: Field) {
+        if(field == mField) {
+            mDirection = if(mDirection == Query.Direction.ASCENDING) Query.Direction.DESCENDING
+            else Query.Direction.ASCENDING
+        } else {
+            mField = field
+            mDirection = Query.Direction.ASCENDING
+        }
+    }
+
+    fun setGenderFilter() {
+        mGender = when(mGender) {
+            Filter.DEFAULT -> Filter.MALE
+            Filter.MALE -> Filter.FEMALE
+            Filter.FEMALE -> Filter.DEFAULT
+        }
+    }
+
+    fun applyFilterAndSort() {
         mRegistration?.remove() // Clear previous listener
-        val mQuery = when(filter) {
-            Filter.DEFAULT -> mFireStore.orderBy(sort.field,sort.getMethod())
-            Filter.MALE, Filter.FEMALE -> mFireStore.whereEqualTo("gender",filter.toString()).orderBy(sort.field,sort.getMethod())
+        val mQuery = when(mGender) {
+            Filter.DEFAULT -> mFireStore.orderBy(mField.toString(),mDirection)
+            Filter.MALE, Filter.FEMALE -> mFireStore.whereEqualTo("gender",mGender.toString()).orderBy(mField.toString(),mDirection)
         }
         mRegistration = mQuery
             .addSnapshotListener { snapshot, e ->
@@ -78,8 +111,8 @@ class ProfilesViewModel : ViewModel() {
         }
     }
 
-    private fun setDefaultsAndLoadData() {
-        mQuery = mFireStore.orderBy("uid")
+    private fun loadInitialData() {
+        mQuery = mFireStore.orderBy(mField.toString())
         mRegistration = mQuery
             .addSnapshotListener { snapshot, e ->
                 if( e != null ) {

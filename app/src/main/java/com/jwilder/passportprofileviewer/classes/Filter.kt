@@ -5,7 +5,5 @@ enum class Filter(val field: String) {
     MALE("male"),
     FEMALE("female");
 
-    override fun toString(): String {
-        return field
-    }
+    override fun toString() = field
 }
