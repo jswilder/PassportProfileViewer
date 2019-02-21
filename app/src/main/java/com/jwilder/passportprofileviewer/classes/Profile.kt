@@ -5,7 +5,7 @@ import com.google.firebase.database.IgnoreExtraProperties
 import com.google.firebase.firestore.QueryDocumentSnapshot
 
 /*
-    Profile class
+    Model for the database & application
  */
 
 @IgnoreExtraProperties

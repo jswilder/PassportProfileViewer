@@ -16,9 +16,10 @@ import com.jwilder.passportprofileviewer.viewmodel.ProfilesViewModel
 
 class ProfileListAdapter internal constructor(val context: Context, private val model: ProfilesViewModel) : RecyclerView.Adapter<ProfileListAdapter.ProfileViewHolder>() {
 
+    @Suppress("PrivatePropertyName")
+    private val TAG = "ProfileListAdapter"
     private val inflater : LayoutInflater = LayoutInflater.from(context)
     private var profiles = emptyList<Profile>()
-    private val TAG = "PROFILE_LIST_ADAPTER"
 
     inner class ProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val profileName: TextView = itemView.findViewById(R.id.text_profile_name)
@@ -43,7 +44,7 @@ class ProfileListAdapter internal constructor(val context: Context, private val 
         }
         holder.profileGenderIcon.drawable.setTint( color )
         holder.itemView.setOnClickListener {
-            model.select(profiles[position])
+            model.setSelectedProfile(profiles[position])
             Log.w(TAG,"${profiles[position].uid} + ${profiles[position].name}")
             it.findNavController().navigate(R.id.action_profilesListFragment_to_profileViewFragment)
         }

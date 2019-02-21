@@ -17,10 +17,6 @@ import java.lang.Exception
 
 class ProfileViewFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = ProfileViewFragment()
-    }
-
     private val TAG = "ProfileViewFragment"
     private lateinit var mViewModel: ProfilesViewModel
     private lateinit var mSelectedProfile: Profile
@@ -30,10 +26,6 @@ class ProfileViewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.profile_view_fragment, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,11 +43,11 @@ class ProfileViewFragment : Fragment() {
         })
 
         button_save.setOnClickListener {
-            mViewModel.submitChangesToDatabase( edit_hobbies.text.toString() )
+            mViewModel.submitProfileChangeDB( edit_hobbies.text.toString() )
         }
 
         button_delete.setOnClickListener {
-            mViewModel.deleteProfileFromDatabase(mSelectedProfile)
+            mViewModel.deleteProfileDB(mSelectedProfile)
         }
     }
 

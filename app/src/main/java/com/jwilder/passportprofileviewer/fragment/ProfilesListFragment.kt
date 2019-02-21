@@ -21,10 +21,6 @@ import java.lang.Exception
 
 class ProfilesListFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = ProfilesListFragment()
-    }
-
     private val TAG = "ProfileListFragment"
     private lateinit var mViewModel: ProfilesViewModel
     private lateinit var mDivider: DividerItemDecoration
@@ -35,10 +31,6 @@ class ProfilesListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.profiles_list_fragment, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -64,7 +56,7 @@ class ProfilesListFragment : Fragment() {
 
         text_gender.setOnClickListener {
             mViewModel.setGenderFilter()
-            mViewModel.applyFilterAndSort()
+            mViewModel.queryProfiles()
             text_gender.text = mViewModel.getFilterLabel()
         }
 
@@ -73,29 +65,29 @@ class ProfilesListFragment : Fragment() {
             mViewModel.setSortField(Field.UID)
             clearLabels()
             text_id.text = mViewModel.getFieldLabel()
-            mViewModel.applyFilterAndSort()
+            mViewModel.queryProfiles()
         }
 
         text_name.setOnClickListener {
             mViewModel.setSortField(Field.NAME)
             clearLabels()
             text_name.text = mViewModel.getFieldLabel()
-            mViewModel.applyFilterAndSort()
+            mViewModel.queryProfiles()
         }
 
         text_age.setOnClickListener {
             mViewModel.setSortField(Field.AGE)
             clearLabels()
             text_age.text = mViewModel.getFieldLabel()
-            mViewModel.applyFilterAndSort()
+            mViewModel.queryProfiles()
         }
 
         image_clear_filter.setOnClickListener {
-            mViewModel.setDefaults()
+            mViewModel.setDefaultsFilterSort()
             clearLabels()
             text_id.text = mViewModel.getFieldLabel()
             text_gender.text = mViewModel.getFilterLabel()
-            mViewModel.applyFilterAndSort()
+            mViewModel.queryProfiles()
         }
     }
 

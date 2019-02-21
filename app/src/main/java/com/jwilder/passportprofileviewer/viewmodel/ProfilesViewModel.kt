@@ -10,50 +10,45 @@ import com.jwilder.passportprofileviewer.classes.Filter
 import com.jwilder.passportprofileviewer.classes.Profile
 import java.lang.Exception
 
+@Suppress("PrivatePropertyName")
 class ProfilesViewModel(application: Application) : AndroidViewModel(application) {
 
-    @Suppress("PrivatePropertyName")
-    private val TAG : String = "PROFILES_VIEW_MODEL"
-    @Suppress("PrivatePropertyName")
+    private val TAG : String = "ProfilesViewModel"
     private val COLLECTION : String = "Profiles"
-    @Suppress("PrivatePropertyName")
-    private val TIME: Long = 1_548_997_200_000 // Feb 1, 2019 in ms
+    private val TIME: Long = 1_548_997_200_000         // Feb 1, 2019 in ms
 
-    /*
-        Observable Fields (through their get methods
-     */
+    /*  Observable Fields   */
     private val mProfiles: MutableLiveData<MutableList<Profile>> = MutableLiveData()
     private val mSelectedProfile = MutableLiveData<Profile>()
 
-    /*
-        FireStore
-        mQuery: Holds the currently active query
-        mRegstration: Holds the listener for the active query
-     */
+    /*  FireStore   */
     private val mFireStore: CollectionReference = FirebaseFirestore.getInstance().collection(COLLECTION)
-    private lateinit var mQuery : Query
-    private lateinit var mRegistration: ListenerRegistration
+    private var mQuery : Query                         // Holds the currently active query
+    private var mRegistration: ListenerRegistration    // Holds the listener for the active query
 
-    /*
-        Sorting / Filtering
-     */
+    /*  Sorting / Filtering */
     private lateinit var mGender: Filter
     private lateinit var mField: Field
     private lateinit var mDirection: Query.Direction
-
 
     fun getSelectedProfile() = mSelectedProfile
     fun getProfiles() = mProfiles
 
     init {
-        setDefaults()
-        loadInitialData()
+        setDefaultsFilterSort()
+        mQuery = buildQuery()
+        mRegistration = ListenerRegistration {  }
+        queryProfiles()
     }
 
-    fun setDefaults() {
+    fun setDefaultsFilterSort() {
         mGender = Filter.DEFAULT
         mField = Field.UID
         mDirection = Query.Direction.ASCENDING
+    }
+
+    fun setSelectedProfile(profile: Profile) {
+        mSelectedProfile.value = profile
     }
 
     fun setSortField(field: Field) {
@@ -75,7 +70,7 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun getFilterLabel() : String {
-        // TODO Get string resource working
+        // TODO Get string resource working for better internationalization
         return when(mGender) {
             Filter.DEFAULT -> "MF" // getApplication<Application>().resources.getString(R.string.mf)
             Filter.FEMALE -> "F"
@@ -95,7 +90,7 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    fun applyFilterAndSort() {
+    fun queryProfiles() {
         mRegistration.remove() // Clear previous listener
         val mQuery = buildQuery()
         mRegistration = mQuery
@@ -127,42 +122,7 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    private fun loadInitialData() {
-        mQuery = mFireStore.orderBy(mField.toString())
-        mRegistration = mQuery
-            .addSnapshotListener { snapshot, e ->
-                if( e != null ) {
-                    Log.w(TAG, "Collection Listen Failed", e)
-                }
-                val profiles: MutableList<Profile> = mutableListOf()
-                for(document in snapshot!!) {
-                    try {
-                        profiles.add(Profile(document))
-                        mFireStore.document(document.id)
-                            .addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
-                                if(firebaseFirestoreException != null) {
-                                    Log.w(TAG, "Listed failed.",firebaseFirestoreException)
-                                    return@addSnapshotListener
-                                }
-                                if(documentSnapshot != null && documentSnapshot.exists()) {
-                                    Log.d(TAG, "Current data: ${documentSnapshot.data}")
-                                } else {
-                                    Log.d(TAG, "Current data: NULL")
-                                }
-                            }
-                    } catch (e: Exception) {
-                        Log.w(TAG,"Failed to convert.",e)
-                    }
-                }
-                mProfiles.value = profiles
-            }
-    }
-
-    fun select(profile: Profile) {
-        mSelectedProfile.value = profile
-    }
-
-    fun submitChangesToDatabase(newHobbies: String) {
+    fun submitProfileChangeDB(newHobbies: String) {
         if(mSelectedProfile.value != null) {
             val data = HashMap<String,Any>()
             data["hobbies"] = newHobbies
@@ -178,7 +138,7 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    fun addNewProfileToDatabase(profile: Profile) {
+    fun addNewProfileDB(profile: Profile) {
         profile.uid = profile.uid - TIME
         mFireStore
             .add(profile.toMap())
@@ -190,7 +150,7 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
             }
     }
 
-    fun deleteProfileFromDatabase(profile: Profile) {
+    fun deleteProfileDB(profile: Profile) {
         if(profile.queryId != null) {
             mFireStore
                 .document(profile.queryId!!)

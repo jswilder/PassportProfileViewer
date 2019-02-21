@@ -16,10 +16,6 @@ import java.util.*
 
 class NewProfileFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = NewProfileFragment()
-    }
-
     private val TAG = "NewProfileFragment"
     private lateinit var mViewModel: ProfilesViewModel
 
@@ -30,10 +26,6 @@ class NewProfileFragment : Fragment() {
         return inflater.inflate(R.layout.new_profile_fragment, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -42,7 +34,7 @@ class NewProfileFragment : Fragment() {
         } ?: throw Exception("Invalid Activity")
 
         button_save.setOnClickListener {
-            mViewModel.addNewProfileToDatabase(getProfileFromInputs())
+            mViewModel.addNewProfileDB(getProfileFromInputs())
         }
     }
 
