@@ -3,7 +3,6 @@ package com.jwilder.passportprofileviewer.viewmodel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.*
 import com.jwilder.passportprofileviewer.classes.Profile
 import java.lang.Exception
@@ -17,20 +16,26 @@ class ProfilesViewModel : ViewModel() {
     @Suppress("PrivatePropertyName")
     private val TIME: Long = 1_548_997_200_000 // Feb 1, 2019 in ms
 
-    private val mFireStore: CollectionReference = FirebaseFirestore.getInstance().collection(COLLECTION)
-
-    private val mAllProfiles: MutableLiveData<MutableList<Profile>> = MutableLiveData()
+    /*
+        Observable Fields (through their get methods
+     */
+    private val mProfiles: MutableLiveData<MutableList<Profile>> = MutableLiveData()
     private val mSelectedProfile = MutableLiveData<Profile>()
 
+    /*
+        FireStore
+        mQuery: Holds the currently active query
+        mRegstration: Holds the listener for the active query
+     */
+    private val mFireStore: CollectionReference = FirebaseFirestore.getInstance().collection(COLLECTION)
     private lateinit var mQuery : Query
     private lateinit var mRegistration: ListenerRegistration
 
     fun getSelectedProfile() = mSelectedProfile
-    fun getAllProfiles() = mAllProfiles
+    fun getProfiles() = mProfiles
 
     init {
-//        applyFilterAndSort(Filter.DEFAULT,Sort.DEFAULT)
-        loadInitialAndListenToChanges()
+        setDefaultsAndLoadData()
     }
 
     enum class Filter(val field: String) {
@@ -91,11 +96,11 @@ class ProfilesViewModel : ViewModel() {
                     Log.w(TAG,"Failed to convert.",e)
                 }
             }
-            mAllProfiles.value = profiles
+            mProfiles.value = profiles
         }
     }
 
-    private fun loadInitialAndListenToChanges() {
+    private fun setDefaultsAndLoadData() {
         mQuery = mFireStore.orderBy("uid")
         mRegistration = mQuery
             .addSnapshotListener { snapshot, e ->
@@ -122,7 +127,7 @@ class ProfilesViewModel : ViewModel() {
                         Log.w(TAG,"Failed to convert.",e)
                     }
                 }
-                mAllProfiles.value = profiles
+                mProfiles.value = profiles
             }
     }
 

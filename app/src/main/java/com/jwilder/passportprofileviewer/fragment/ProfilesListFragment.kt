@@ -48,7 +48,7 @@ class ProfilesListFragment : Fragment() {
 
         val adapter = ProfileListAdapter(context!!,mViewModel)
 
-        mViewModel.getAllProfiles().observe( this, Observer { profiles ->
+        mViewModel.getProfiles().observe( this, Observer { profiles ->
             profiles?.let { adapter.setProfiles(profiles) }
         })
 
@@ -79,7 +79,7 @@ class ProfilesListFragment : Fragment() {
         }
 
         image_clear_filter.setOnClickListener {
-
+            mViewModel.applyFilterAndSort(ProfilesViewModel.Filter.DEFAULT,ProfilesViewModel.Sort.DEFAULT)
         }
     }
 }
