@@ -3,6 +3,7 @@ package com.jwilder.passportprofileviewer.viewmodel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.*
 import com.jwilder.passportprofileviewer.classes.Profile
 import java.lang.Exception
@@ -16,34 +17,87 @@ class ProfilesViewModel : ViewModel() {
     @Suppress("PrivatePropertyName")
     private val TIME: Long = 1_548_997_200_000 // Feb 1, 2019 in ms
 
-    private val mFireStore: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private val mFireStore: CollectionReference = FirebaseFirestore.getInstance().collection(COLLECTION)
 
     private val mAllProfiles: MutableLiveData<MutableList<Profile>> = MutableLiveData()
     private val mSelectedProfile = MutableLiveData<Profile>()
 
-    /*
-    Needed Indexes/Indices:
-        GENDER
-            - Age ASC
-            - Age DESC
-            - Name ASC
-            - Name DESC
-        All
-            - Age ASC
-            - Age DESC
-            - Name ASC
-            - Name DESC
-     */
+    private lateinit var mQuery : Query
+    private lateinit var mRegistration: ListenerRegistration
 
     fun getSelectedProfile() = mSelectedProfile
     fun getAllProfiles() = mAllProfiles
 
     init {
-        loadInitialAndListenToChanges()
+        applyFilterAndSort(Filter.DEFAULT,Sort.DEFAULT)
+//        loadInitialAndListenToChanges()
+    }
+
+    enum class Filter(val field: String) {
+        DEFAULT(""),
+        MALE("male"),
+        FEMALE("female");
+
+        override fun toString(): String {
+            return field
+        }
+    }
+
+    enum class Sort(val field: String, private val method: String) {
+        AGE_ASC("age","asc"),
+        AGE_DESC("age","desc"),
+        NAME_ASC("name","asc"),
+        NAME_DESC("name","desc"),
+        UID_ASC("uid","asc"),
+        UID_DESC("uid","desc"),
+        DEFAULT("uid","asc");
+
+        fun getMethod() : Query.Direction {
+            return if(method == "asc")
+                Query.Direction.ASCENDING
+            else
+                Query.Direction.DESCENDING
+        }
+    }
+
+    fun applyFilterAndSort(filter: Filter, sort: Sort) {
+        mRegistration.remove() // Clear previous listener
+        val mQuery = when(filter) {
+            Filter.DEFAULT -> mFireStore.orderBy(sort.field,sort.getMethod())
+            Filter.MALE, Filter.FEMALE -> mFireStore.whereEqualTo("gender",filter.toString()).orderBy(sort.field,sort.getMethod())
+        }
+        mRegistration = mQuery
+            .addSnapshotListener { snapshot, e ->
+            if( e != null ) {
+                Log.w(TAG, "Collection Listen Failed", e)
+            }
+            val profiles: MutableList<Profile> = mutableListOf()
+            for(document in snapshot!!) {
+                try {
+                    profiles.add(Profile(document))
+                    mFireStore.document(document.id)
+                        .addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
+                            if(firebaseFirestoreException != null) {
+                                Log.w(TAG, "Listed failed.",firebaseFirestoreException)
+                                return@addSnapshotListener
+                            }
+                            if(documentSnapshot != null && documentSnapshot.exists()) {
+                                Log.d(TAG, "Current data: ${documentSnapshot.data}")
+                            } else {
+                                Log.d(TAG, "Current data: NULL")
+                            }
+                        }
+                } catch (e: Exception) {
+                    Log.w(TAG,"Failed to convert.",e)
+                }
+            }
+            mAllProfiles.value = profiles
+        }
     }
 
     private fun loadInitialAndListenToChanges() {
-        mFireStore.collection(COLLECTION)
+
+        mFireStore
             .orderBy("uid")
             .addSnapshotListener { snapshot, e ->
                 if( e != null ) {
@@ -53,7 +107,7 @@ class ProfilesViewModel : ViewModel() {
                 for(document in snapshot!!) {
                     try {
                         profiles.add(Profile(document))
-                        mFireStore.collection(COLLECTION).document(document.id)
+                        mFireStore.document(document.id)
                             .addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
                                 if(firebaseFirestoreException != null) {
                                     Log.w(TAG, "Listed failed.",firebaseFirestoreException)
@@ -81,7 +135,7 @@ class ProfilesViewModel : ViewModel() {
         if(mSelectedProfile.value != null) {
             val data = HashMap<String,Any>()
             data["hobbies"] = newHobbies
-            mFireStore.collection(COLLECTION)
+            mFireStore
                 .document(mSelectedProfile.value?.queryId!!)
                 .set(data, SetOptions.merge())
                 .addOnSuccessListener {
@@ -95,7 +149,7 @@ class ProfilesViewModel : ViewModel() {
 
     fun addNewProfileToDatabase(profile: Profile) {
         profile.uid = profile.uid - TIME
-        mFireStore.collection(COLLECTION)
+        mFireStore
             .add(profile.toMap())
             .addOnSuccessListener { documentReference ->
                 Log.d(TAG,"Document written with ID: ${documentReference.id}")
@@ -107,7 +161,7 @@ class ProfilesViewModel : ViewModel() {
 
     fun deleteProfileFromDatabase(profile: Profile) {
         if(profile.queryId != null) {
-            mFireStore.collection(COLLECTION)
+            mFireStore
                 .document(profile.queryId!!)
                 .delete()
                 .addOnSuccessListener {
