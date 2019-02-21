@@ -14,12 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.jwilder.passportprofileviewer.R
 import com.jwilder.passportprofileviewer.adapters.ProfileListAdapter
-import com.jwilder.passportprofileviewer.classes.Profile
 import com.jwilder.passportprofileviewer.viewmodels.ProfilesListViewModel
 import kotlinx.android.synthetic.main.profiles_list_fragment.*
 import kotlinx.android.synthetic.main.recycler_list_header.*
 import java.lang.Exception
-import java.util.*
 
 class ProfilesListFragment : Fragment() {
 
@@ -51,7 +49,7 @@ class ProfilesListFragment : Fragment() {
 
         val adapter = ProfileListAdapter(context!!,viewModel)
 
-        viewModel.getAllProfiles().observe( this, Observer { profiles ->
+        viewModel.getSortedProfiles().observe( this, Observer { profiles ->
             profiles?.let { adapter.setProfiles(profiles) }
         })
 

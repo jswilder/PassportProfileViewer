@@ -14,10 +14,12 @@ class ProfilesListViewModel : ViewModel() {
     private val TAG : String = "PROFILES_VIEW_MODEL"
     @Suppress("PrivatePropertyName")
     private val COLLECTION : String = "Profiles"
+    @Suppress("PrivatePropertyName")
     private val TIME: Long = 1_548_997_200_000 // Feb 1, 2019 in ms
 
     private val mFireStore: FirebaseFirestore = FirebaseFirestore.getInstance()
-    private val mProfiles: MutableLiveData<MutableList<Profile>> = MutableLiveData()
+    private val mAllProfiles: MutableLiveData<MutableList<Profile>> = MutableLiveData()
+    private val mSortedProfiles: MutableLiveData<MutableList<Profile>> = MutableLiveData()
     private val mSelectedProfile = MutableLiveData<Profile>()
     private val mToastMessage : MutableLiveData<String> = MutableLiveData("")
     private val mErrorOccurred : MutableLiveData<Boolean> = MutableLiveData(false)
@@ -44,25 +46,39 @@ class ProfilesListViewModel : ViewModel() {
             - Name DESC
      */
 
-    fun getAllProfiles() = mProfiles
+    fun getSortedProfiles() : MutableLiveData<MutableList<Profile>> {
+        val profiles: MutableList<Profile> = mutableListOf()
+        mFireStore.collection(COLLECTION)
+            .orderBy("uid")
+            .get()
+            .addOnSuccessListener { result ->
+                for(document in result) {
+                    profiles.add(Profile(document))
+                }
+                mSortedProfiles.value = profiles
+            }
+            .addOnFailureListener { exception ->
+                Log.w(TAG,"Sorted Profiles.",exception)
+            }
+        return mSortedProfiles
+    }
+
     fun getSelectedProfile() = mSelectedProfile
     fun getToastMessage() = mToastMessage
     fun getErrorOccurred() = mErrorOccurred
     fun getAttemptedAction() = mAttemptedAction
 
     init {
-        loadInitialValues()
-        setLiveUpdateListener()
+        loadInitialAndListenToChanges()
     }
 
-    private fun setLiveUpdateListener() {
+    private fun loadInitialAndListenToChanges() {
         mFireStore.collection(COLLECTION)
             .addSnapshotListener { snapshot, e ->
                 if( e != null ) {
                     Log.w(TAG, "Collection Listen Failed", e)
                 }
-
-                val profiles: MutableList<Profile> = ArrayList()
+                val profiles: MutableList<Profile> = mutableListOf()
 
                 for(document in snapshot!!) {
                     try {
@@ -86,41 +102,7 @@ class ProfilesListViewModel : ViewModel() {
                         Log.w(TAG,"Failed to convert.",e)
                     }
                 }
-                mProfiles.value = profiles
-            }
-    }
-
-    private fun loadInitialValues() {
-        val profiles: MutableList<Profile> = ArrayList()
-        mFireStore.collection(COLLECTION)
-            .orderBy("uid", Query.Direction.ASCENDING)
-            .get()
-            .addOnSuccessListener { result ->
-                for(document in result) {
-                    try {
-                        val item = Profile(document)
-//                        mProfiles.value?.add(mProfiles.value!!.size,item)
-                        mProfiles.value?.add(item)
-                        Log.d(TAG,"$item")
-                        mFireStore.collection(COLLECTION).document(document.id)
-                            .addSnapshotListener { snapshot, e ->
-                                if(e != null) {
-                                    Log.w(TAG, "Listed failed.",e)
-                                    return@addSnapshotListener
-                                }
-                                if(snapshot != null && snapshot.exists()) {
-                                    Log.d(TAG, "Current data: ${snapshot.data}")
-                                } else {
-                                    Log.d(TAG, "Current data: NULL")
-                                }
-                            }
-                    } catch (e: Exception) {
-                        Log.w(TAG,"Failed to convert.",e)
-                    }
-                }
-            }
-            .addOnFailureListener{ exception ->
-                Log.w(TAG,"Error getting docs.",exception)
+                mAllProfiles.value = profiles
             }
     }
 
