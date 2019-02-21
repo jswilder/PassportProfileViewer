@@ -8,15 +8,10 @@ import androidx.navigation.ui.setupWithNavController
 
 class MainActivity : AppCompatActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setupNavigation()
-
-        // TODO move inside the view model
-//        firebaseDatabase = FirebaseDatabase.getInstance()
-//        profilesDatabaseReference = firebaseDatabase.reference.child("Profiles")
     }
 
     private fun setupNavigation() {
