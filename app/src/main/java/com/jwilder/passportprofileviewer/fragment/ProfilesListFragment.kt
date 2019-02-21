@@ -63,19 +63,19 @@ class ProfilesListFragment : Fragment() {
         }
 
         text_id.setOnClickListener {
-
+            mViewModel.applyFilterAndSort(ProfilesViewModel.Filter.DEFAULT, ProfilesViewModel.Sort.UID_ASC)
         }
 
         text_name.setOnClickListener {
-
+            mViewModel.applyFilterAndSort(ProfilesViewModel.Filter.DEFAULT,ProfilesViewModel.Sort.NAME_ASC)
         }
 
         text_gender.setOnClickListener {
-
+            mViewModel.applyFilterAndSort(ProfilesViewModel.Filter.FEMALE,ProfilesViewModel.Sort.DEFAULT)
         }
 
         text_age.setOnClickListener {
-
+            mViewModel.applyFilterAndSort(ProfilesViewModel.Filter.DEFAULT,ProfilesViewModel.Sort.AGE_ASC)
         }
 
         image_clear_filter.setOnClickListener {

@@ -29,8 +29,8 @@ class ProfilesViewModel : ViewModel() {
     fun getAllProfiles() = mAllProfiles
 
     init {
-        applyFilterAndSort(Filter.DEFAULT,Sort.DEFAULT)
-//        loadInitialAndListenToChanges()
+//        applyFilterAndSort(Filter.DEFAULT,Sort.DEFAULT)
+        loadInitialAndListenToChanges()
     }
 
     enum class Filter(val field: String) {
@@ -61,7 +61,7 @@ class ProfilesViewModel : ViewModel() {
     }
 
     fun applyFilterAndSort(filter: Filter, sort: Sort) {
-        mRegistration.remove() // Clear previous listener
+        mRegistration?.remove() // Clear previous listener
         val mQuery = when(filter) {
             Filter.DEFAULT -> mFireStore.orderBy(sort.field,sort.getMethod())
             Filter.MALE, Filter.FEMALE -> mFireStore.whereEqualTo("gender",filter.toString()).orderBy(sort.field,sort.getMethod())
@@ -96,9 +96,8 @@ class ProfilesViewModel : ViewModel() {
     }
 
     private fun loadInitialAndListenToChanges() {
-
-        mFireStore
-            .orderBy("uid")
+        mQuery = mFireStore.orderBy("uid")
+        mRegistration = mQuery
             .addSnapshotListener { snapshot, e ->
                 if( e != null ) {
                     Log.w(TAG, "Collection Listen Failed", e)
