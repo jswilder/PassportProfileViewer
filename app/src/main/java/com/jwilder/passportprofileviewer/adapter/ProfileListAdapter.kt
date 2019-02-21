@@ -28,7 +28,7 @@ class ProfileListAdapter internal constructor(val context: Context, private val 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileViewHolder {
-        val itemView = inflater.inflate(R.layout.profile_recycler_item,parent,false)
+        val itemView = inflater.inflate(R.layout.recycler_list_item,parent,false)
         return ProfileViewHolder(itemView)
     }
 

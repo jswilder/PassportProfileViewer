@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/include"
-        layout="@layout/recycler_list_header"
+        layout="@layout/recycler_filter_header"
         android:layout_width="match_parent"
         android:layout_height="@dimen/list_item_height"
         app:layout_constraintBottom_toTopOf="@+id/recycler_profiles"
@@ -25,7 +25,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include"
-        tools:listitem="@layout/profile_recycler_item" />
+        tools:listitem="@layout/recycler_list_item" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_new_profile"
