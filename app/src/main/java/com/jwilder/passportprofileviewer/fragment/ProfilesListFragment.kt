@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.jwilder.passportprofileviewer.R
 import com.jwilder.passportprofileviewer.adapter.ProfileListAdapter
+import com.jwilder.passportprofileviewer.classes.Filter
+import com.jwilder.passportprofileviewer.classes.Sort
 import com.jwilder.passportprofileviewer.viewmodel.ProfilesViewModel
 import kotlinx.android.synthetic.main.profiles_list_fragment.*
 import kotlinx.android.synthetic.main.recycler_filter_header.*
@@ -63,23 +65,23 @@ class ProfilesListFragment : Fragment() {
         }
 
         text_id.setOnClickListener {
-            mViewModel.applyFilterAndSort(ProfilesViewModel.Filter.DEFAULT, ProfilesViewModel.Sort.UID_ASC)
+            mViewModel.applyFilterAndSort(Filter.DEFAULT, Sort.UID_ASC)
         }
 
         text_name.setOnClickListener {
-            mViewModel.applyFilterAndSort(ProfilesViewModel.Filter.DEFAULT,ProfilesViewModel.Sort.NAME_ASC)
+            mViewModel.applyFilterAndSort(Filter.DEFAULT,Sort.NAME_ASC)
         }
 
         text_gender.setOnClickListener {
-            mViewModel.applyFilterAndSort(ProfilesViewModel.Filter.FEMALE,ProfilesViewModel.Sort.DEFAULT)
+            mViewModel.applyFilterAndSort(Filter.FEMALE,Sort.DEFAULT)
         }
 
         text_age.setOnClickListener {
-            mViewModel.applyFilterAndSort(ProfilesViewModel.Filter.DEFAULT,ProfilesViewModel.Sort.AGE_ASC)
+            mViewModel.applyFilterAndSort(Filter.DEFAULT,Sort.AGE_ASC)
         }
 
         image_clear_filter.setOnClickListener {
-            mViewModel.applyFilterAndSort(ProfilesViewModel.Filter.DEFAULT,ProfilesViewModel.Sort.DEFAULT)
+            mViewModel.applyFilterAndSort(Filter.DEFAULT,Sort.DEFAULT)
         }
     }
 }

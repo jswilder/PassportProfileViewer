@@ -4,7 +4,10 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.*
+import com.jwilder.passportprofileviewer.classes.Filter
 import com.jwilder.passportprofileviewer.classes.Profile
+import com.jwilder.passportprofileviewer.classes.Sort
+import com.jwilder.passportprofileviewer.database.Database
 import java.lang.Exception
 
 class ProfilesViewModel : ViewModel() {
@@ -22,6 +25,8 @@ class ProfilesViewModel : ViewModel() {
     private val mProfiles: MutableLiveData<MutableList<Profile>> = MutableLiveData()
     private val mSelectedProfile = MutableLiveData<Profile>()
 
+    private lateinit var mDatabase: Database
+
     /*
         FireStore
         mQuery: Holds the currently active query
@@ -36,33 +41,6 @@ class ProfilesViewModel : ViewModel() {
 
     init {
         setDefaultsAndLoadData()
-    }
-
-    enum class Filter(val field: String) {
-        DEFAULT(""),
-        MALE("male"),
-        FEMALE("female");
-
-        override fun toString(): String {
-            return field
-        }
-    }
-
-    enum class Sort(val field: String, private val method: String) {
-        AGE_ASC("age","asc"),
-        AGE_DESC("age","desc"),
-        NAME_ASC("name","asc"),
-        NAME_DESC("name","desc"),
-        UID_ASC("uid","asc"),
-        UID_DESC("uid","desc"),
-        DEFAULT("uid","asc");
-
-        fun getMethod() : Query.Direction {
-            return if(method == "asc")
-                Query.Direction.ASCENDING
-            else
-                Query.Direction.DESCENDING
-        }
     }
 
     fun applyFilterAndSort(filter: Filter, sort: Sort) {
