@@ -1,16 +1,16 @@
 package com.jwilder.passportprofileviewer.viewmodel
 
+import android.app.Application
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.*
 import com.jwilder.passportprofileviewer.classes.Field
 import com.jwilder.passportprofileviewer.classes.Filter
 import com.jwilder.passportprofileviewer.classes.Profile
-import com.jwilder.passportprofileviewer.database.Database
 import java.lang.Exception
 
-class ProfilesViewModel : ViewModel() {
+class ProfilesViewModel(application: Application) : AndroidViewModel(application) {
 
     @Suppress("PrivatePropertyName")
     private val TAG : String = "PROFILES_VIEW_MODEL"
@@ -24,8 +24,6 @@ class ProfilesViewModel : ViewModel() {
      */
     private val mProfiles: MutableLiveData<MutableList<Profile>> = MutableLiveData()
     private val mSelectedProfile = MutableLiveData<Profile>()
-
-    private lateinit var mDatabase: Database
 
     /*
         FireStore
@@ -76,12 +74,30 @@ class ProfilesViewModel : ViewModel() {
         }
     }
 
-    fun applyFilterAndSort() {
-        mRegistration?.remove() // Clear previous listener
-        val mQuery = when(mGender) {
+    fun getFilterLabel() : String {
+        // TODO Get string resource working
+        return when(mGender) {
+            Filter.DEFAULT -> "MF" // getApplication<Application>().resources.getString(R.string.mf)
+            Filter.FEMALE -> "F"
+            Filter.MALE -> "M"
+        }
+    }
+
+    fun getFieldLabel() : String {
+        val arrow = if(mDirection == Query.Direction.ASCENDING) "\u2191" else "\u2193"
+        return "$arrow ${mField.field}"
+    }
+
+    private fun buildQuery() : Query {
+        return when(mGender) {
             Filter.DEFAULT -> mFireStore.orderBy(mField.toString(),mDirection)
             Filter.MALE, Filter.FEMALE -> mFireStore.whereEqualTo("gender",mGender.toString()).orderBy(mField.toString(),mDirection)
         }
+    }
+
+    fun applyFilterAndSort() {
+        mRegistration.remove() // Clear previous listener
+        val mQuery = buildQuery()
         mRegistration = mQuery
             .addSnapshotListener { snapshot, e ->
             if( e != null ) {

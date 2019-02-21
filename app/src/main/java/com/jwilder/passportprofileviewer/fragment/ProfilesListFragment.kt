@@ -62,29 +62,46 @@ class ProfilesListFragment : Fragment() {
             findNavController().navigate(R.id.action_profilesListFragment_to_newProfileFragment)
         }
 
+        text_gender.setOnClickListener {
+            mViewModel.setGenderFilter()
+            mViewModel.applyFilterAndSort()
+            text_gender.text = mViewModel.getFilterLabel()
+        }
+
+        text_id.text = mViewModel.getFieldLabel()
         text_id.setOnClickListener {
             mViewModel.setSortField(Field.UID)
+            clearLabels()
+            text_id.text = mViewModel.getFieldLabel()
             mViewModel.applyFilterAndSort()
         }
 
         text_name.setOnClickListener {
             mViewModel.setSortField(Field.NAME)
-            mViewModel.applyFilterAndSort()
-        }
-
-        text_gender.setOnClickListener {
-            mViewModel.setGenderFilter()
+            clearLabels()
+            text_name.text = mViewModel.getFieldLabel()
             mViewModel.applyFilterAndSort()
         }
 
         text_age.setOnClickListener {
             mViewModel.setSortField(Field.AGE)
+            clearLabels()
+            text_age.text = mViewModel.getFieldLabel()
             mViewModel.applyFilterAndSort()
         }
 
         image_clear_filter.setOnClickListener {
             mViewModel.setDefaults()
+            clearLabels()
+            text_id.text = mViewModel.getFieldLabel()
+            text_gender.text = mViewModel.getFilterLabel()
             mViewModel.applyFilterAndSort()
         }
+    }
+
+    private fun clearLabels() {
+        text_age.text = getString(R.string.age)
+        text_id.text = getString(R.string.id)
+        text_name.text = getString(R.string.name)
     }
 }
