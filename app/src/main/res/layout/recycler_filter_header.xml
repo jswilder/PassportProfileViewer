@@ -54,12 +54,12 @@
         android:layout_marginStart="8dp"
         android:text="@string/id_asc"
         app:layout_constraintBottom_toBottomOf="@+id/text_gender"
-        app:layout_constraintEnd_toStartOf="@+id/appCompatImageView"
+        app:layout_constraintEnd_toStartOf="@+id/image_clear_filter"
         app:layout_constraintStart_toEndOf="@+id/text_age"
         app:layout_constraintTop_toTopOf="@+id/text_gender" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/appCompatImageView"
+        android:id="@+id/image_clear_filter"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

@@ -1,19 +1,17 @@
 package com.jwilder.passportprofileviewer.fragment
 
 import android.os.Bundle
-import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 
 import com.jwilder.passportprofileviewer.R
 import com.jwilder.passportprofileviewer.classes.Profile
-import com.jwilder.passportprofileviewer.viewmodel.ProfilesListViewModel
+import com.jwilder.passportprofileviewer.viewmodel.ProfilesViewModel
 import kotlinx.android.synthetic.main.profile_view_fragment.*
 import java.lang.Exception
 
@@ -24,7 +22,7 @@ class ProfileViewFragment : Fragment() {
     }
 
     private val TAG = "PROFILE_VIEW_FRAG"
-    private lateinit var mViewModel: ProfilesListViewModel
+    private lateinit var mViewModel: ProfilesViewModel
     private lateinit var mSelectedProfile: Profile
 
     override fun onCreateView(
@@ -42,7 +40,7 @@ class ProfileViewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         mViewModel = activity?.run {
-            ViewModelProviders.of(this).get(ProfilesListViewModel::class.java)
+            ViewModelProviders.of(this).get(ProfilesViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
 
         mViewModel.getSelectedProfile().observe( this, Observer { profile ->

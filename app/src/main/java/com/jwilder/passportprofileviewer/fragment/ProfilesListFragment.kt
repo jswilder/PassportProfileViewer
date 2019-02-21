@@ -13,8 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.jwilder.passportprofileviewer.R
 import com.jwilder.passportprofileviewer.adapter.ProfileListAdapter
-import com.jwilder.passportprofileviewer.viewmodel.ProfilesListViewModel
+import com.jwilder.passportprofileviewer.viewmodel.ProfilesViewModel
 import kotlinx.android.synthetic.main.profiles_list_fragment.*
+import kotlinx.android.synthetic.main.recycler_filter_header.*
 import java.lang.Exception
 
 class ProfilesListFragment : Fragment() {
@@ -23,7 +24,7 @@ class ProfilesListFragment : Fragment() {
         fun newInstance() = ProfilesListFragment()
     }
 
-    private lateinit var mViewModel: ProfilesListViewModel
+    private lateinit var mViewModel: ProfilesViewModel
     private lateinit var mDivider: DividerItemDecoration
 
     override fun onCreateView(
@@ -42,12 +43,12 @@ class ProfilesListFragment : Fragment() {
 
         val recyclerView = recycler_profiles
         mViewModel = activity?.run {
-            ViewModelProviders.of(this).get(ProfilesListViewModel::class.java)
+            ViewModelProviders.of(this).get(ProfilesViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
 
         val adapter = ProfileListAdapter(context!!,mViewModel)
 
-        mViewModel.getSortedProfiles().observe( this, Observer { profiles ->
+        mViewModel.getAllProfiles().observe( this, Observer { profiles ->
             profiles?.let { adapter.setProfiles(profiles) }
         })
 
@@ -59,6 +60,26 @@ class ProfilesListFragment : Fragment() {
 
         fab_new_profile.setOnClickListener {
             findNavController().navigate(R.id.action_profilesListFragment_to_newProfileFragment)
+        }
+
+        text_id.setOnClickListener {
+
+        }
+
+        text_name.setOnClickListener {
+
+        }
+
+        text_gender.setOnClickListener {
+
+        }
+
+        text_age.setOnClickListener {
+
+        }
+
+        image_clear_filter.setOnClickListener {
+
         }
     }
 }

@@ -7,7 +7,7 @@ import com.google.firebase.firestore.*
 import com.jwilder.passportprofileviewer.classes.Profile
 import java.lang.Exception
 
-class ProfilesListViewModel : ViewModel() {
+class ProfilesViewModel : ViewModel() {
 
     @Suppress("PrivatePropertyName")
     private val TAG : String = "PROFILES_VIEW_MODEL"
@@ -19,7 +19,6 @@ class ProfilesListViewModel : ViewModel() {
     private val mFireStore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     private val mAllProfiles: MutableLiveData<MutableList<Profile>> = MutableLiveData()
-    private val mSortedProfiles: MutableLiveData<MutableList<Profile>> = MutableLiveData()
     private val mSelectedProfile = MutableLiveData<Profile>()
 
     /*
@@ -36,24 +35,8 @@ class ProfilesListViewModel : ViewModel() {
             - Name DESC
      */
 
-    fun getSortedProfiles() : MutableLiveData<MutableList<Profile>> {
-        val profiles: MutableList<Profile> = mutableListOf()
-        mFireStore.collection(COLLECTION)
-            .orderBy("uid")
-            .get()
-            .addOnSuccessListener { result ->
-                for(document in result) {
-                    profiles.add(Profile(document))
-                }
-                mSortedProfiles.value = profiles
-            }
-            .addOnFailureListener { exception ->
-                Log.w(TAG,"Sorted Profiles.",exception)
-            }
-        return mSortedProfiles
-    }
-
     fun getSelectedProfile() = mSelectedProfile
+    fun getAllProfiles() = mAllProfiles
 
     init {
         loadInitialAndListenToChanges()
@@ -61,18 +44,15 @@ class ProfilesListViewModel : ViewModel() {
 
     private fun loadInitialAndListenToChanges() {
         mFireStore.collection(COLLECTION)
+            .orderBy("uid")
             .addSnapshotListener { snapshot, e ->
                 if( e != null ) {
                     Log.w(TAG, "Collection Listen Failed", e)
                 }
                 val profiles: MutableList<Profile> = mutableListOf()
-
                 for(document in snapshot!!) {
                     try {
-                        val item = Profile(document)
-                        profiles.add(item)
-                        Log.d(TAG,"$item")
-
+                        profiles.add(Profile(document))
                         mFireStore.collection(COLLECTION).document(document.id)
                             .addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
                                 if(firebaseFirestoreException != null) {

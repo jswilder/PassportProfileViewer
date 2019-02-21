@@ -12,9 +12,9 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.jwilder.passportprofileviewer.R
 import com.jwilder.passportprofileviewer.classes.Profile
-import com.jwilder.passportprofileviewer.viewmodel.ProfilesListViewModel
+import com.jwilder.passportprofileviewer.viewmodel.ProfilesViewModel
 
-class ProfileListAdapter internal constructor(val context: Context, private val model: ProfilesListViewModel) : RecyclerView.Adapter<ProfileListAdapter.ProfileViewHolder>() {
+class ProfileListAdapter internal constructor(val context: Context, private val model: ProfilesViewModel) : RecyclerView.Adapter<ProfileListAdapter.ProfileViewHolder>() {
 
     private val inflater : LayoutInflater = LayoutInflater.from(context)
     private var profiles = emptyList<Profile>()
