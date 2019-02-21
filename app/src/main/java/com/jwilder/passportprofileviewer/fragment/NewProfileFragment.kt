@@ -1,4 +1,4 @@
-package com.jwilder.passportprofileviewer.fragments
+package com.jwilder.passportprofileviewer.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 
 import com.jwilder.passportprofileviewer.R
 import com.jwilder.passportprofileviewer.classes.Profile
-import com.jwilder.passportprofileviewer.viewmodels.ProfilesListViewModel
+import com.jwilder.passportprofileviewer.viewmodel.ProfilesListViewModel
 import kotlinx.android.synthetic.main.new_profile_fragment.*
 import java.lang.Exception
 import java.util.*
@@ -20,7 +20,7 @@ class NewProfileFragment : Fragment() {
         fun newInstance() = NewProfileFragment()
     }
 
-    private lateinit var viewModel: ProfilesListViewModel
+    private lateinit var mViewModel: ProfilesListViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,12 +36,12 @@ class NewProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = activity?.run {
+        mViewModel = activity?.run {
             ViewModelProviders.of(this).get(ProfilesListViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
 
         button_save.setOnClickListener {
-            viewModel.addNewProfileToDatabase(getProfileFromInputs())
+            mViewModel.addNewProfileToDatabase(getProfileFromInputs())
         }
     }
 

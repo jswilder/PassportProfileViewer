@@ -1,4 +1,4 @@
-package com.jwilder.passportprofileviewer.fragments
+package com.jwilder.passportprofileviewer.fragment
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -6,17 +6,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.jwilder.passportprofileviewer.R
-import com.jwilder.passportprofileviewer.adapters.ProfileListAdapter
-import com.jwilder.passportprofileviewer.viewmodels.ProfilesListViewModel
+import com.jwilder.passportprofileviewer.adapter.ProfileListAdapter
+import com.jwilder.passportprofileviewer.viewmodel.ProfilesListViewModel
 import kotlinx.android.synthetic.main.profiles_list_fragment.*
-import kotlinx.android.synthetic.main.recycler_list_header.*
 import java.lang.Exception
 
 class ProfilesListFragment : Fragment() {
@@ -25,8 +23,8 @@ class ProfilesListFragment : Fragment() {
         fun newInstance() = ProfilesListFragment()
     }
 
-    private lateinit var viewModel: ProfilesListViewModel
-    private lateinit var divider: DividerItemDecoration
+    private lateinit var mViewModel: ProfilesListViewModel
+    private lateinit var mDivider: DividerItemDecoration
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,21 +41,21 @@ class ProfilesListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView = recycler_profiles
-        viewModel = activity?.run {
+        mViewModel = activity?.run {
             ViewModelProviders.of(this).get(ProfilesListViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
 
-        val adapter = ProfileListAdapter(context!!,viewModel)
+        val adapter = ProfileListAdapter(context!!,mViewModel)
 
-        viewModel.getSortedProfiles().observe( this, Observer { profiles ->
+        mViewModel.getSortedProfiles().observe( this, Observer { profiles ->
             profiles?.let { adapter.setProfiles(profiles) }
         })
 
-        divider = DividerItemDecoration(context,1)
+        mDivider = DividerItemDecoration(context,1)
 
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(recyclerView.context)
-        recyclerView.addItemDecoration(divider)
+        recyclerView.addItemDecoration(mDivider)
 
         fab_new_profile.setOnClickListener {
             findNavController().navigate(R.id.action_profilesListFragment_to_newProfileFragment)

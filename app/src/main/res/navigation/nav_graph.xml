@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/profilesListFragment"
-        android:name="com.jwilder.passportprofileviewer.fragments.ProfilesListFragment"
+        android:name="com.jwilder.passportprofileviewer.fragment.ProfilesListFragment"
         android:label="Home"
         tools:layout="@layout/profiles_list_fragment">
         <action
@@ -18,12 +18,12 @@
     </fragment>
     <fragment
         android:id="@+id/newProfileFragment"
-        android:name="com.jwilder.passportprofileviewer.fragments.NewProfileFragment"
+        android:name="com.jwilder.passportprofileviewer.fragment.NewProfileFragment"
         android:label="New Profile"
         tools:layout="@layout/new_profile_fragment" />
     <fragment
         android:id="@+id/profileViewFragment"
-        android:name="com.jwilder.passportprofileviewer.fragments.ProfileViewFragment"
+        android:name="com.jwilder.passportprofileviewer.fragment.ProfileViewFragment"
         android:label="Profile View"
         tools:layout="@layout/profile_view_fragment" />
 </navigation>

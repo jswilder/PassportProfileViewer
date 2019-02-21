@@ -1,4 +1,4 @@
-package com.jwilder.passportprofileviewer.viewmodels
+package com.jwilder.passportprofileviewer.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.*
 import com.jwilder.passportprofileviewer.classes.Profile
 import java.lang.Exception
-import java.util.ArrayList
 
 class ProfilesListViewModel : ViewModel() {
 
