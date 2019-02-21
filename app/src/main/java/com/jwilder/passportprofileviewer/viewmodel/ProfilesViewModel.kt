@@ -1,6 +1,8 @@
 package com.jwilder.passportprofileviewer.viewmodel
 
+import android.app.Application
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.*
@@ -10,7 +12,7 @@ import com.jwilder.passportprofileviewer.classes.Profile
 import com.jwilder.passportprofileviewer.database.Database
 import java.lang.Exception
 
-class ProfilesViewModel : ViewModel() {
+class ProfilesViewModel(application: Application) : AndroidViewModel(application) {
 
     @Suppress("PrivatePropertyName")
     private val TAG : String = "PROFILES_VIEW_MODEL"
@@ -74,6 +76,20 @@ class ProfilesViewModel : ViewModel() {
             Filter.MALE -> Filter.FEMALE
             Filter.FEMALE -> Filter.DEFAULT
         }
+    }
+
+    fun getFilterLabel() : String {
+        // TODO Get string resource working
+        return when(mGender) {
+            Filter.DEFAULT -> "MF" // getApplication<Application>().resources.getString(R.string.mf)
+            Filter.FEMALE -> "F"
+            Filter.MALE -> "M"
+        }
+    }
+
+    fun getFieldLabel() : String {
+        val arrow = if(mDirection == Query.Direction.ASCENDING) "\u2191" else "\u2193"
+        return "$arrow ${mField.field}"
     }
 
     fun applyFilterAndSort() {
