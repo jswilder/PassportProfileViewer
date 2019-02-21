@@ -48,7 +48,7 @@ class NewProfileFragment : Fragment() {
     private fun getProfileFromInputs() : Profile {
         val name = if (text_input_name.text.toString() != "") text_input_name.text.toString() else "None"
         val hobbies = if (text_input_hobbies.text.toString() != "") text_input_hobbies.text.toString() else "None"
-        val age = if (text_input_age.text.toString() != "") text_input_age.text.toString().toLong() else 0 as Long
+        val age = if (text_input_age.text.toString() != "") text_input_age.text.toString().toLong() else 0
         val image = if (text_input_image.text.toString() != "") text_input_image.text.toString() else "None"
         val gender = if ( spinner_gender.selectedItem.toString() == "male" ) Profile.GENDER.MALE else Profile.GENDER.FEMALE
         val uid = Date().time

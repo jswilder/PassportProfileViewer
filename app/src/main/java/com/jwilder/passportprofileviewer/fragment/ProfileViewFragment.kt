@@ -54,26 +54,6 @@ class ProfileViewFragment : Fragment() {
 
         button_save.setOnClickListener { mViewModel.submitChangesToDatabase( edit_hobbies.text.toString() ) }
         button_delete.setOnClickListener { mViewModel.deleteProfileFromDatabase(mSelectedProfile) }
-
-        mViewModel.getToastMessage().observe(this, Observer { result ->
-            if(result != null && mViewModel.getAttemptedAction() != ProfilesListViewModel.Actions.NONE) {
-                val toast = Toast.makeText(activity,result,Toast.LENGTH_SHORT)
-                toast.setGravity(Gravity.CENTER,0,0)
-                toast.show()
-//                when(mViewModel.mActionAttempted) {
-//                    ProfilesListViewModel.Actions.NONE -> {}
-//                    ProfilesListViewModel.Actions.CREATE -> {}
-//                    ProfilesListViewModel.Actions.DELETE -> {
-                        // TODO Navigate up on success
-//                        mViewModel.clearAction()
-//                        if(mViewModel.mErrorOccured.value!!) {
-//                            view.findNavController().navigateUp()
-//                        }
-//                    }
-//                    ProfilesListViewModel.Actions.SAVE -> {}
-//                }
-            }
-        })
     }
 
     private fun updateUI(profile: Profile) {

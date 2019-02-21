@@ -28,7 +28,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="@string/name_asc"
+        android:text="@string/name"
         app:layout_constraintBottom_toBottomOf="@+id/text_gender"
         app:layout_constraintEnd_toStartOf="@+id/text_age"
         app:layout_constraintStart_toEndOf="@+id/text_gender"

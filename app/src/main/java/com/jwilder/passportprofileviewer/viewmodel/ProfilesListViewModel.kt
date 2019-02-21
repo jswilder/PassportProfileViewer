@@ -17,19 +17,10 @@ class ProfilesListViewModel : ViewModel() {
     private val TIME: Long = 1_548_997_200_000 // Feb 1, 2019 in ms
 
     private val mFireStore: FirebaseFirestore = FirebaseFirestore.getInstance()
+
     private val mAllProfiles: MutableLiveData<MutableList<Profile>> = MutableLiveData()
     private val mSortedProfiles: MutableLiveData<MutableList<Profile>> = MutableLiveData()
     private val mSelectedProfile = MutableLiveData<Profile>()
-    private val mToastMessage : MutableLiveData<String> = MutableLiveData("")
-    private val mErrorOccurred : MutableLiveData<Boolean> = MutableLiveData(false)
-    private var mAttemptedAction = Actions.NONE
-
-    enum class Actions {
-        SAVE,
-        DELETE,
-        CREATE,
-        NONE
-    }
 
     /*
     Needed Indexes/Indices:
@@ -63,9 +54,6 @@ class ProfilesListViewModel : ViewModel() {
     }
 
     fun getSelectedProfile() = mSelectedProfile
-    fun getToastMessage() = mToastMessage
-    fun getErrorOccurred() = mErrorOccurred
-    fun getAttemptedAction() = mAttemptedAction
 
     init {
         loadInitialAndListenToChanges()
@@ -109,16 +97,6 @@ class ProfilesListViewModel : ViewModel() {
         mSelectedProfile.value = profile
     }
 
-    private fun setToastData(message: String, errorOccured: Boolean, action: Actions) {
-        mToastMessage.value = message
-        mErrorOccurred.value = errorOccured
-        mAttemptedAction = action
-    }
-
-    fun clearAction() {
-        mAttemptedAction = Actions.NONE
-    }
-
     fun submitChangesToDatabase(newHobbies: String) {
         if(mSelectedProfile.value != null) {
             val data = HashMap<String,Any>()
@@ -128,11 +106,9 @@ class ProfilesListViewModel : ViewModel() {
                 .set(data, SetOptions.merge())
                 .addOnSuccessListener {
                     mSelectedProfile.value?.hobbies = newHobbies
-                    setToastData("Changes Saved",false, Actions.SAVE)
                 }
                 .addOnFailureListener { e ->
                     Log.w(TAG,"Changes failed to save.",e)
-                    setToastData("Save Failed",true, Actions.SAVE)
                 }
         }
     }
@@ -143,11 +119,9 @@ class ProfilesListViewModel : ViewModel() {
             .add(profile.toMap())
             .addOnSuccessListener { documentReference ->
                 Log.d(TAG,"Document written with ID: ${documentReference.id}")
-                setToastData("Profile Added",false, Actions.CREATE)
             }
             .addOnFailureListener { exception ->
                 Log.w(TAG, "Error adding document.",exception)
-                setToastData("Failed to add profile",true, Actions.CREATE)
             }
     }
 
@@ -158,12 +132,10 @@ class ProfilesListViewModel : ViewModel() {
                 .delete()
                 .addOnSuccessListener {
                     Log.d(TAG,"${profile.queryId} Deleted!")
-                    setToastData("Profile deleted successfully",false, Actions.DELETE)
                     // TODO Disable "save" button when delete succeeds
                 }
                 .addOnFailureListener { e ->
                     Log.w(TAG,"Error deleting profile ${profile.queryId}",e)
-                    setToastData("Failed to delete profile",true, Actions.DELETE)
                 }
         }
     }

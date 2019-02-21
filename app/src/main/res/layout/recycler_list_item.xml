@@ -51,7 +51,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:ellipsize="start"
         app:layout_constraintBottom_toBottomOf="@+id/image_profile_gender_ic"
         app:layout_constraintEnd_toStartOf="@+id/appCompatImageView2"
         app:layout_constraintStart_toEndOf="@+id/text_profile_age"
