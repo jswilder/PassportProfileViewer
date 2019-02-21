@@ -62,25 +62,5 @@ class ProfilesListFragment : Fragment() {
         fab_new_profile.setOnClickListener {
             findNavController().navigate(R.id.action_profilesListFragment_to_newProfileFragment)
         }
-
-        text_gender.setOnClickListener {
-            // TODO
-            Toast.makeText(context!!,"Gender",Toast.LENGTH_SHORT).show()
-        }
-
-        text_name.setOnClickListener {
-            Toast.makeText(context!!,"Name",Toast.LENGTH_SHORT).show()
-            // TODO
-        }
-
-        text_age.setOnClickListener {
-            Toast.makeText(context!!,"Age",Toast.LENGTH_SHORT).show()
-            // TODO
-        }
-
-        text_id.setOnClickListener {
-            Toast.makeText(context!!,"Id",Toast.LENGTH_SHORT).show()
-            // TODO
-        }
     }
 }

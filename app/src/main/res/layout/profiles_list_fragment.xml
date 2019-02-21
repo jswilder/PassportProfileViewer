@@ -7,12 +7,23 @@
     tools:context=".fragments.ProfilesListFragment">
 
     <include
-        android:id="@+id/include"
-        layout="@layout/recycler_list_header"
-        app:layout_constraintBottom_toTopOf="@+id/recycler_profiles"
+        android:id="@+id/include2"
+        layout="@layout/filter_bar"
+        android:layout_height="@dimen/filter_bar_height"
+        android:layout_width="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/recycler_list_header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/list_item_height"
+        app:layout_constraintBottom_toTopOf="@+id/recycler_profiles"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include2" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_profiles"
@@ -20,8 +31,10 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include" />
+        app:layout_constraintTop_toBottomOf="@+id/include"
+        tools:listitem="@layout/profile_recycler_item" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_new_profile"
