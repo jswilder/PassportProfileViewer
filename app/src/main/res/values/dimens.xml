@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="list_item_height">56dp</dimen>
+    <dimen name="list_item_height">52dp</dimen>
     <dimen name="elevation_normal">4dp</dimen>
-    <dimen name="filter_bar_height">64dp</dimen>
+    <dimen name="filter_bar_height">56dp</dimen>
 </resources>
