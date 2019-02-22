@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.jwilder.passportprofileviewer.R
 import com.jwilder.passportprofileviewer.classes.Profile
 import com.jwilder.passportprofileviewer.viewmodel.ProfilesViewModel
+import kotlinx.android.synthetic.main.layout_new_profile.*
 import kotlinx.android.synthetic.main.new_profile_fragment.*
 import java.lang.Exception
 import java.util.*

@@ -26,6 +26,7 @@
     <string name="id">Id</string>
     <string name="id_asc">\u2191 Id</string>
     <string name="id_desc">\u2193 Id</string>
+    <string name="profile_image_preview">Profile image preview</string>
     <string-array
         name="string_array_genders">
         <item>male</item>
