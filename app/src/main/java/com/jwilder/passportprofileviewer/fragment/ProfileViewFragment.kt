@@ -7,12 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getColor
+import androidx.core.content.ContextCompat.getDrawable
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 
 import com.jwilder.passportprofileviewer.R
 import com.jwilder.passportprofileviewer.classes.Profile
 import com.jwilder.passportprofileviewer.viewmodel.ProfilesViewModel
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.layout_profile.*
 import kotlinx.android.synthetic.main.profile_view_fragment.*
 import java.lang.Exception
@@ -71,5 +73,9 @@ class ProfileViewFragment : Fragment() {
             }
         }
         edit_hobbies.setText(profile.hobbies)
+        Picasso.get()
+            .load(profile.image)
+            .placeholder(R.drawable.passport)
+            .into(image_profile_picture)
     }
 }
