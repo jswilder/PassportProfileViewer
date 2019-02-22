@@ -25,7 +25,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_age"
-        style="@style/TextProfileHeaderStyle"
+        style="@style/TextProfileSubheaderStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/zero"
@@ -37,7 +37,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_gender"
-        style="@style/TextProfileHeaderStyle"
+        style="@style/TextProfileSubheaderStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -53,7 +53,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_hobbies_label"
-        style="@style/TextProfileSubheaderStyle"
+        style="@style/TextProfileSubheaderThinStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -92,7 +92,6 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_delete_profile"
-        style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -100,6 +99,7 @@
         android:layout_marginBottom="16dp"
         android:text="@string/delete"
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_save_changes"
         app:layout_constraintStart_toStartOf="@+id/text_name"
@@ -108,12 +108,12 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_save_changes"
-        style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/save"
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/btn_delete_profile"
         app:layout_constraintEnd_toEndOf="@+id/text_name"
         app:layout_constraintStart_toEndOf="@+id/btn_delete_profile"

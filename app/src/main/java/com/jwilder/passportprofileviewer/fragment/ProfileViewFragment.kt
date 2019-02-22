@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getColor
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 
@@ -55,12 +56,20 @@ class ProfileViewFragment : Fragment() {
     private fun updateUI(profile: Profile) {
         text_name.text = profile.name
         text_age.text = profile.age.toString()
-        text_gender.text = if(profile.gender == Profile.GENDER.MALE) getString(R.string.male) else getString(R.string.female)
-        val color = when(profile.gender) {
-            Profile.GENDER.FEMALE -> ContextCompat.getColor(activity!!,R.color.femalePink)
-            Profile.GENDER.MALE -> ContextCompat.getColor(activity!!,R.color.maleBlue)
+        when(profile.gender) {
+            Profile.GENDER.MALE -> {
+                text_gender.text = getString(R.string.male)
+                view_background.setBackgroundColor(getColor(activity!!,R.color.maleBlue))
+                btn_save_changes.setBackgroundColor(getColor(activity!!,R.color.femalePink))
+                btn_delete_profile.setBackgroundColor(getColor(activity!!,R.color.femalePink))
+            }
+            Profile.GENDER.FEMALE -> {
+                text_gender.text = getString(R.string.female)
+                view_background.setBackgroundColor(getColor(activity!!,R.color.femalePink))
+                btn_save_changes.setBackgroundColor(getColor(activity!!,R.color.maleBlue))
+                btn_delete_profile.setBackgroundColor(getColor(activity!!,R.color.maleBlue))
+            }
         }
         edit_hobbies.setText(profile.hobbies)
-        view_background.setBackgroundColor(color)
     }
 }

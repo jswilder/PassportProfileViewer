@@ -18,6 +18,14 @@
 
     <style name="TextProfileSubheaderStyle" parent="TextAppearance.MaterialComponents.Headline6" >
         <item name="android:textColor">@color/white</item>
+        <!--<item name="android:textStyle">b</item>-->
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="fontFamily">@font/roboto_mono</item>
+    </style>
+
+    <style name="TextProfileSubheaderThinStyle" parent="TextAppearance.MaterialComponents.Headline6" >
+        <item name="android:textColor">@color/white</item>
         <item name="android:textStyle">italic</item>
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">1</item>
