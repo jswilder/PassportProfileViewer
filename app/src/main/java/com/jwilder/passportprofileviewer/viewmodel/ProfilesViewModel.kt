@@ -2,6 +2,8 @@ package com.jwilder.passportprofileviewer.viewmodel
 
 import android.app.Application
 import android.util.Log
+import android.view.Gravity
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.*
@@ -31,10 +33,14 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
     private lateinit var mField: Field
     private lateinit var mDirection: Query.Direction
 
+    private var toast: Toast
+
     init {
         setDefaultsFilterSort()
         mQuery = buildQuery()
         mRegistration = ListenerRegistration {  }
+        toast = Toast.makeText(getApplication<Application>(),"",Toast.LENGTH_SHORT)
+        toast.setGravity(Gravity.CENTER,0,0)
         queryProfiles()
     }
 
@@ -83,6 +89,11 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
+    private fun setToastTextAndShow(message: String) {
+        toast.setText(message)
+        toast.show()
+    }
+
     private fun buildQuery() : Query {
         return when(mGender) {
             Filter.DEFAULT -> mFireStore.orderBy(mField.toString(),mDirection)
@@ -129,9 +140,11 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
                 .set(mapOf("hobbies" to hobbies), SetOptions.merge())
                 .addOnSuccessListener {
                     mSelectedProfile.value?.hobbies = hobbies
+                    setToastTextAndShow("Changes Saved")
                 }
                 .addOnFailureListener { e ->
                     Log.w(TAG,"Changes failed to save.",e)
+                    setToastTextAndShow("Failed to Save Changes")
                 }
         }
     }
@@ -142,9 +155,11 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
             .add(profile.toMap())
             .addOnSuccessListener { documentReference ->
                 Log.d(TAG,"Document written with ID: ${documentReference.id}")
+                setToastTextAndShow("Profile Added")
             }
             .addOnFailureListener { exception ->
                 Log.w(TAG, "Error adding document.",exception)
+                setToastTextAndShow("Failed to Add Profile")
             }
     }
 
@@ -155,10 +170,12 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
                 .delete()
                 .addOnSuccessListener {
                     Log.d(TAG,"${profile.queryId} deleted")
+                    setToastTextAndShow("Profile Deleted")
                     // TODO Disable "save" button when delete succeeds
                 }
                 .addOnFailureListener { e ->
                     Log.w(TAG,"Error deleting profile ${profile.queryId}",e)
+                    setToastTextAndShow("Failed to Delete Profile")
                 }
         }
     }
