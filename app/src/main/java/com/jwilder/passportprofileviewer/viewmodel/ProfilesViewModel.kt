@@ -173,6 +173,7 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
                 .addOnSuccessListener {
                     Log.d(TAG,"${profile.queryId} deleted")
                     setToastTextAndShow("Profile Deleted")
+                    mSelectedProfile.value = null
                     // TODO Disable "save" button when delete succeeds
                 }
                 .addOnFailureListener { e ->

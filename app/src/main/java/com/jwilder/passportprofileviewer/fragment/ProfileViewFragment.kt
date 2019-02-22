@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat.getColor
 import androidx.core.content.ContextCompat.getDrawable
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 
 import com.jwilder.passportprofileviewer.R
 import com.jwilder.passportprofileviewer.classes.Profile
@@ -40,9 +41,12 @@ class ProfileViewFragment : Fragment() {
         } ?: throw Exception("Invalid Activity")
 
         mViewModel.getSelectedProfile().observe( this, Observer { profile ->
-            profile?.let {
-                mSelectedProfile = profile
-                updateUI(mSelectedProfile)
+            if(profile == null) findNavController().navigateUp()
+            else {
+                profile.let {
+                    mSelectedProfile = profile
+                    updateUI(mSelectedProfile)
+                }
             }
         })
 
