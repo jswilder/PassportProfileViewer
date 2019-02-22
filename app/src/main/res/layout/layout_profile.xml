@@ -1,34 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/view_background"
+    android:id="@+id/profile_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/femalePink"
-    tools:context=".fragment.ProfileViewFragment">
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/image_profile_picture"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:contentDescription="@string/desc_profile_image"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_center_vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/passport"
-        tools:src="@tools:sample/avatars" />
-
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_center_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent=".5" />
+    android:background="@color/maleBlue">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_name"
@@ -40,10 +17,10 @@
         android:layout_marginEnd="16dp"
         android:text="@string/none"
         android:textAppearance="@style/TextProfileHeaderStyle"
-        app:layout_constraintBottom_toTopOf="@+id/text_hobbies_label"
-        app:layout_constraintEnd_toStartOf="@+id/text_age"
+        app:layout_constraintBottom_toTopOf="@+id/text_age"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_profile_picture"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="Jeremy Wilder" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -51,40 +28,47 @@
         style="@style/TextProfileHeaderStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:text="@string/zero"
-        app:layout_constraintBottom_toBottomOf="@+id/text_name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/text_name"
-        app:layout_constraintTop_toTopOf="@+id/text_name"
+        app:layout_constraintBottom_toBottomOf="@+id/text_gender"
+        app:layout_constraintEnd_toEndOf="@+id/text_name"
+        app:layout_constraintStart_toEndOf="@+id/text_gender"
+        app:layout_constraintTop_toTopOf="@+id/text_gender"
         tools:text="99" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_gender"
+        style="@style/TextProfileHeaderStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/none"
+        android:textAppearance="@style/TextProfileHeaderStyle"
+        app:layout_constraintBottom_toTopOf="@+id/text_hobbies_label"
+        app:layout_constraintEnd_toStartOf="@+id/text_age"
+        app:layout_constraintStart_toStartOf="@+id/text_name"
+        app:layout_constraintTop_toBottomOf="@+id/text_name"
+        tools:text="Male" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_hobbies_label"
         style="@style/TextProfileSubheaderStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
         android:text="@string/hobbies"
-        app:layout_constraintBottom_toTopOf="@+id/frame_hobbies"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_name" />
+        app:layout_constraintBottom_toTopOf="@+id/frameLayout"
+        app:layout_constraintEnd_toEndOf="@+id/text_name"
+        app:layout_constraintStart_toStartOf="@+id/text_gender"
+        app:layout_constraintTop_toBottomOf="@+id/text_gender" />
 
     <FrameLayout
-        android:id="@+id/frame_hobbies"
+        android:id="@+id/frameLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_delete_profile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/text_name"
+        app:layout_constraintStart_toStartOf="@+id/text_name"
         app:layout_constraintTop_toBottomOf="@+id/text_hobbies_label">
 
         <EditText
@@ -98,38 +82,37 @@
             android:text="@string/none"
             android:textAlignment="viewStart"
             android:textColor="@color/white"
-            tools:text="Hiking, Canoeing, Gaming, Etc, Shamming, Shamming, Shamming, Shamming," />
+            tools:text="Hiking, Canoeing, Gaming, Etc, Shamming, Shamming, Shamming, Shamming,"
+            tools:ignore="Autofill,LabelFor" />
+
     </FrameLayout>
 
-    <com.google.android.material.button.MaterialButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_delete_profile"
         style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
-        app:icon="@drawable/ic_delete"
         android:text="@string/delete"
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_save_changes"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frame_hobbies" />
+        app:layout_constraintStart_toStartOf="@+id/text_name"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        app:layout_constraintVertical_bias="0.0" />
 
-    <com.google.android.material.button.MaterialButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_save_changes"
         style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="16dp"
         android:text="@string/save"
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
-        app:icon="@drawable/ic_save"
         app:layout_constraintBottom_toBottomOf="@+id/btn_delete_profile"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/text_name"
         app:layout_constraintStart_toEndOf="@+id/btn_delete_profile"
         app:layout_constraintTop_toTopOf="@+id/btn_delete_profile" />
 

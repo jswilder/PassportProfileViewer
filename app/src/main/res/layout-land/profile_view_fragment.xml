@@ -75,7 +75,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_delete"
+        app:layout_constraintBottom_toTopOf="@+id/btn_delete_profile"
         app:layout_constraintEnd_toEndOf="@+id/text_age"
         app:layout_constraintStart_toStartOf="@+id/text_name"
         app:layout_constraintTop_toBottomOf="@+id/text_hobbies_label">
@@ -95,7 +95,7 @@
     </FrameLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_delete"
+        android:id="@+id/btn_delete_profile"
         style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -104,11 +104,11 @@
         android:text="@string/delete"
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button_save"
+        app:layout_constraintEnd_toStartOf="@+id/btn_save_changes"
         app:layout_constraintStart_toStartOf="@+id/text_hobbies_label" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_save"
+        android:id="@+id/btn_save_changes"
         style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -118,6 +118,6 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/text_age"
-        app:layout_constraintStart_toEndOf="@+id/button_delete" />
+        app:layout_constraintStart_toEndOf="@+id/btn_delete_profile" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

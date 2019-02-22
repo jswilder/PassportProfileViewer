@@ -13,6 +13,8 @@
     <string name="mf">MF</string>
     <string name="m">M</string>
     <string name="f">F</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
     <string name="filter_icon">filter icon</string>
     <string name="age">Age</string>
     <string name="age_asc">\u2191 Age</string>

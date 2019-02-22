@@ -33,7 +33,7 @@ class NewProfileFragment : Fragment() {
             ViewModelProviders.of(this).get(ProfilesViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
 
-        button_save.setOnClickListener {
+        btn_save_new_profile.setOnClickListener {
             mViewModel.addNewProfileDB(getProfileFromInputs())
         }
     }

@@ -42,11 +42,11 @@ class ProfileViewFragment : Fragment() {
             }
         })
 
-        button_save.setOnClickListener {
+        btn_save_changes.setOnClickListener {
             mViewModel.submitProfileChangeDB( edit_hobbies.text.toString() )
         }
 
-        button_delete.setOnClickListener {
+        btn_delete_profile.setOnClickListener {
             mViewModel.deleteProfileDB(mSelectedProfile)
         }
     }
