@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/profile_background"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/maleBlue">
+    android:layout_height="match_parent">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_name"
@@ -21,6 +20,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         tools:text="Jeremy Wilder" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -48,6 +48,7 @@
         app:layout_constraintEnd_toStartOf="@+id/text_age"
         app:layout_constraintStart_toStartOf="@+id/text_name"
         app:layout_constraintTop_toBottomOf="@+id/text_name"
+        app:layout_constraintVertical_bias="0.0"
         tools:text="Male" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -71,19 +72,21 @@
         app:layout_constraintStart_toStartOf="@+id/text_name"
         app:layout_constraintTop_toBottomOf="@+id/text_hobbies_label">
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/edit_hobbies"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
+            android:ellipsize="end"
             android:ems="10"
             android:fontFamily="sans-serif-medium"
             android:inputType="textMultiLine"
+            android:maxLines="5"
             android:text="@string/none"
             android:textAlignment="viewStart"
             android:textColor="@color/white"
-            tools:text="Hiking, Canoeing, Gaming, Etc, Shamming, Shamming, Shamming, Shamming,"
-            tools:ignore="Autofill,LabelFor" />
+            tools:ignore="Autofill,LabelFor"
+            tools:text="Lorem ipsum dolor sit amet, molestiae vulputate ea has, at per labore verear regione. Option mandamus adversarium at cum. Ei pri debet graece. Ius vero homero id. Postulant theophrastus ut his, esse iusto cu mel, eum cu tantas animal. " />
 
     </FrameLayout>
 

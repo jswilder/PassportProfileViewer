@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.jwilder.passportprofileviewer.R
 import com.jwilder.passportprofileviewer.classes.Profile
 import com.jwilder.passportprofileviewer.viewmodel.ProfilesViewModel
+import kotlinx.android.synthetic.main.layout_profile.*
 import kotlinx.android.synthetic.main.profile_view_fragment.*
 import java.lang.Exception
 
@@ -54,6 +55,7 @@ class ProfileViewFragment : Fragment() {
     private fun updateUI(profile: Profile) {
         text_name.text = profile.name
         text_age.text = profile.age.toString()
+        text_gender.text = if(profile.gender == Profile.GENDER.MALE) getString(R.string.male) else getString(R.string.female)
         val color = when(profile.gender) {
             Profile.GENDER.FEMALE -> ContextCompat.getColor(activity!!,R.color.femalePink)
             Profile.GENDER.MALE -> ContextCompat.getColor(activity!!,R.color.maleBlue)
