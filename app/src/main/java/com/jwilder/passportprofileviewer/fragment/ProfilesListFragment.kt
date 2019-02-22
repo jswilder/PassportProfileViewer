@@ -50,17 +50,33 @@ class ProfilesListFragment : Fragment() {
         recycler_profiles.layoutManager = LinearLayoutManager(recycler_profiles.context)
         recycler_profiles.addItemDecoration(mDivider)
 
-        fab_new_profile.setOnClickListener {
-            findNavController().navigate(R.id.action_profilesListFragment_to_newProfileFragment)
-        }
+        initLabels()
+        initListeners()
+    }
 
+    private fun initLabels() {
+        clearLabels()
+        when(mViewModel.getField()) {
+            Field.AGE -> text_age.text = mViewModel.getFieldLabel()
+            Field.NAME -> text_name.text = mViewModel.getFieldLabel()
+            Field.UID -> text_id.text = mViewModel.getFieldLabel()
+        }
+        text_gender.text = mViewModel.getFilterLabel()
+    }
+
+    private fun clearLabels() {
+        text_age.text = getString(R.string.age)
+        text_id.text = getString(R.string.id)
+        text_name.text = getString(R.string.name)
+    }
+
+    private fun initListeners() {
         text_gender.setOnClickListener {
             mViewModel.setGenderFilter()
             mViewModel.queryProfiles()
             text_gender.text = mViewModel.getFilterLabel()
         }
 
-        text_id.text = mViewModel.getFieldLabel()
         text_id.setOnClickListener {
             mViewModel.setSortField(Field.UID)
             clearLabels()
@@ -89,11 +105,9 @@ class ProfilesListFragment : Fragment() {
             text_gender.text = mViewModel.getFilterLabel()
             mViewModel.queryProfiles()
         }
-    }
 
-    private fun clearLabels() {
-        text_age.text = getString(R.string.age)
-        text_id.text = getString(R.string.id)
-        text_name.text = getString(R.string.name)
+        fab_new_profile.setOnClickListener {
+            findNavController().navigate(R.id.action_profilesListFragment_to_newProfileFragment)
+        }
     }
 }

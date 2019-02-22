@@ -61,6 +61,8 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
         return "$arrow ${mField.field}"
     }
 
+    fun getField() = mField
+
     fun setDefaultsFilterSort() {
         mGender = Filter.DEFAULT
         mField = Field.UID
