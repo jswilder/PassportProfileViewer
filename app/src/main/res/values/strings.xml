@@ -28,6 +28,8 @@
     <string name="id_desc">\u2193 Id</string>
     <string name="profile_image_preview">Profile image preview</string>
     <string name="image_url">Image URL</string>
+    <string name="error_name_required">Name Required</string>
+    <string name="error_age_required">Age Required</string>
     <string-array
         name="string_array_genders">
         <item>male</item>

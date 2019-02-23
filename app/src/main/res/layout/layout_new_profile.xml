@@ -27,6 +27,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:hint="@string/name"
+                app:errorEnabled="false"
+                app:errorTextAppearance="@style/TextAppearance.Design.Error"
                 app:hintAnimationEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -52,6 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
+                app:errorTextAppearance="@style/TextAppearance.Design.Error"
                 android:hint="@string/age">
 
                 <com.google.android.material.textfield.TextInputEditText

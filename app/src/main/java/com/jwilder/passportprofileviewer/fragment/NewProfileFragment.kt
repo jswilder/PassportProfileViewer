@@ -35,8 +35,39 @@ class NewProfileFragment : Fragment() {
         } ?: throw Exception("Invalid Activity")
 
         btn_save_new_profile.setOnClickListener {
-            mViewModel.addNewProfileDB(getProfileFromInputs())
+            if(areSaveCriteriaMet()) {
+                mViewModel.addNewProfileDB(getProfileFromInputs())
+                clearAllInputs()
+            }
         }
+    }
+
+    /* Insure a name and age have been given */
+    private fun areSaveCriteriaMet() : Boolean {
+        val name = if(text_input_name.text.toString() == "") {
+            layout_name.isErrorEnabled = true
+            layout_name.error = getString(R.string.error_name_required)
+            false
+        } else {
+            layout_name.isErrorEnabled = false
+            true
+        }
+        val age = if(text_input_age.text.toString() == "") {
+            layout_age.isErrorEnabled = true
+            layout_age.error = getString(R.string.error_age_required)
+            false
+        } else {
+            layout_age.isErrorEnabled = false
+            true
+        }
+        return name && age
+    }
+
+    private fun clearAllInputs() {
+        text_input_name.setText("")
+        text_input_age.setText("")
+        text_input_hobbies.setText("")
+        text_input_image.setText("")
     }
 
     private fun getProfileFromInputs() : Profile {
