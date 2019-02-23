@@ -1,10 +1,12 @@
 package com.jwilder.passportprofileviewer.fragment
 
+import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.content.ContextCompat.getDrawable
@@ -24,7 +26,7 @@ class ProfileViewFragment : Fragment() {
 
     private val TAG = "ProfileViewFragment"
     private lateinit var mViewModel: ProfilesViewModel
-    private lateinit var mSelectedProfile: Profile
+    private lateinit var mDeleteDialog: DeleteProfileDialogFragment
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,19 +45,18 @@ class ProfileViewFragment : Fragment() {
         mViewModel.getSelectedProfile().observe( this, Observer { profile ->
             if(profile == null) findNavController().navigateUp()
             else {
-                profile.let {
-                    mSelectedProfile = profile
-                    updateUI(mSelectedProfile)
-                }
+                updateUI(profile)
             }
         })
+
+        mDeleteDialog = DeleteProfileDialogFragment()
 
         btn_save_changes.setOnClickListener {
             mViewModel.submitProfileChangeDB( edit_hobbies.text.toString() )
         }
 
         btn_delete_profile.setOnClickListener {
-            mViewModel.deleteProfileDB(mSelectedProfile)
+            mDeleteDialog.show(fragmentManager!!,mDeleteDialog.TAG)
         }
     }
 
