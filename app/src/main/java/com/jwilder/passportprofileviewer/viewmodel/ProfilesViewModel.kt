@@ -58,7 +58,7 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
 
     fun getFieldLabel() : String {
         val arrow = if(mDirection == Query.Direction.ASCENDING) "\u2191" else "\u2193"
-        return "$arrow ${mField.field}"
+        return "$arrow ${mField.label}"
     }
 
     fun getField() = mField
