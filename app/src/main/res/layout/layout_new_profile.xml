@@ -1,143 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
+    android:layout_height="wrap_content">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layout_name"
-        style="TextInputLayoutStyle"
-        android:layout_width="match_parent"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:hint="@string/name"
-        app:layout_constraintBottom_toTopOf="@+id/spinner_gender"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/text_input_name"
-            style="TextInputEditTextStyle"
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName" />
+            android:orientation="vertical">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_name"
+                style="TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:hint="@string/name"
+                app:hintAnimationEnabled="true">
 
-    <Spinner
-        android:id="@+id/spinner_gender"
-        style="@style/Base.Widget.AppCompat.Spinner.Underlined"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="8dp"
-        android:entries="@array/string_array_genders"
-        app:layout_constraintBottom_toBottomOf="@+id/layout_age"
-        app:layout_constraintEnd_toStartOf="@+id/layout_age"
-        app:layout_constraintHorizontal_bias="0.52"
-        app:layout_constraintStart_toStartOf="@+id/layout_name"
-        app:layout_constraintTop_toTopOf="@+id/layout_age"
-        app:layout_constraintVertical_bias="0.0" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/text_input_name"
+                    style="TextInputEditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layout_age"
-        style="TextInputLayoutStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:hint="@string/age"
-        app:layout_constraintBottom_toTopOf="@+id/layout_image_source"
-        app:layout_constraintEnd_toEndOf="@+id/layout_name"
-        app:layout_constraintStart_toEndOf="@+id/spinner_gender"
-        app:layout_constraintTop_toBottomOf="@+id/layout_name"
-        app:layout_constraintVertical_bias="0.0">
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/text_input_age"
-            style="TextInputEditTextStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:maxLines="1" />
+            <Spinner
+                android:id="@+id/spinner_gender"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:entries="@array/string_array_genders" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_age"
+                style="TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:hint="@string/age">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layout_image_source"
-        style="TextInputLayoutStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="@string/image_url"
-        app:layout_constraintBottom_toTopOf="@+id/layout_hobbies"
-        app:layout_constraintEnd_toEndOf="@+id/layout_name"
-        app:layout_constraintStart_toStartOf="@+id/layout_name"
-        app:layout_constraintTop_toBottomOf="@+id/layout_age">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/text_input_age"
+                    style="TextInputEditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/text_input_image"
-            style="TextInputEditTextStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textUri" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_image_source"
+                style="TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:hint="@string/image_url">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layout_hobbies"
-        style="TextInputLayoutStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="@string/hobbies"
-        app:layout_constraintBottom_toTopOf="@+id/btn_discard_new_profile"
-        app:layout_constraintEnd_toEndOf="@+id/layout_name"
-        app:layout_constraintStart_toStartOf="@+id/layout_name"
-        app:layout_constraintTop_toBottomOf="@+id/layout_image_source">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/text_input_image"
+                    style="TextInputEditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textUri" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/text_input_hobbies"
-            style="TextInputEditTextStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_hobbies"
+                style="TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:hint="@string/hobbies">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_discard_new_profile"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/discard"
-        android:background="@color/femalePink"
-        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_save_new_profile"
-        app:layout_constraintStart_toStartOf="@+id/layout_name"
-        app:layout_constraintTop_toBottomOf="@+id/layout_hobbies" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/text_input_hobbies"
+                    style="TextInputEditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine" />
 
-    <androidx.appcompat.widget.AppCompatButton
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_save_new_profile"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/save"
+        android:layout_marginStart="@dimen/fab_margin"
+        android:layout_marginTop="@dimen/fab_margin"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"
         android:background="@color/femalePink"
-        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_discard_new_profile"
-        app:layout_constraintEnd_toEndOf="@+id/layout_name"
-        app:layout_constraintStart_toEndOf="@+id/btn_discard_new_profile"
-        app:layout_constraintTop_toTopOf="@+id/btn_discard_new_profile" />
+        android:src="@drawable/ic_save"
+        android:tint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
