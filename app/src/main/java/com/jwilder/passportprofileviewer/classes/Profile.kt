@@ -2,6 +2,7 @@ package com.jwilder.passportprofileviewer.classes
 
 import com.google.firebase.database.Exclude
 import com.google.firebase.database.IgnoreExtraProperties
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QueryDocumentSnapshot
 
 /*
@@ -20,7 +21,16 @@ data class Profile(
 ) {
 
     constructor(d: QueryDocumentSnapshot) : this() {
-        // TODO Clean this up
+        queryId = d.id
+        name = d.get("name") as String
+        hobbies = d.get("hobbies") as String
+        image = d.get("image") as String
+        uid = d.get("uid") as Long
+        age = d.get("age") as Long
+        gender = if(d.get("gender") as String == "male") GENDER.MALE else GENDER.FEMALE
+    }
+
+    constructor(d: DocumentSnapshot) : this() {
         queryId = d.id
         name = d.get("name") as String
         hobbies = d.get("hobbies") as String

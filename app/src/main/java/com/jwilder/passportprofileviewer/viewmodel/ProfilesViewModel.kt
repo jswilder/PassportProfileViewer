@@ -25,8 +25,9 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
 
     /*  FireStore   */
     private val mFireStore: CollectionReference = FirebaseFirestore.getInstance().collection(COLLECTION)
-    private var mQuery : Query                         // Holds the currently active query
-    private var mRegistration: ListenerRegistration    // Holds the listener for the active query
+    private var mQuery : Query                              // Holds the currently active query (for all profiles)
+    private var mRegistration: ListenerRegistration         // Holds the listener for the active query (for all profiles)
+    private var mRegistrationProfile: ListenerRegistration  // Holds the listener for the selected profile
 
     /*  Sorting / Filtering */
     private lateinit var mGender: Filter
@@ -37,8 +38,9 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
 
     init {
         setDefaultsFilterSort()
-        mQuery = buildQuery()
+        mQuery = buildAllProfilesQuery()
         mRegistration = ListenerRegistration {  }
+        mRegistrationProfile = ListenerRegistration {  }
         toast = Toast.makeText(getApplication<Application>(),"",Toast.LENGTH_SHORT)
         toast.setGravity(Gravity.CENTER,0,0)
         queryProfiles()
@@ -70,7 +72,21 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun setSelectedProfile(profile: Profile) {
-        mSelectedProfile.value = profile
+        mRegistrationProfile.remove()
+        mRegistrationProfile = mFireStore.document(profile.queryId.toString())
+            .addSnapshotListener(EventListener<DocumentSnapshot> { snapshot, e ->
+            if (e != null) {
+                Log.w(TAG, "Listen failed.", e)
+                return@EventListener
+            }
+            if (snapshot != null && snapshot.exists()) {
+                Log.d(TAG, "Current data: " + snapshot.data)
+                mSelectedProfile.value = Profile(snapshot)
+            } else {
+                Log.d(TAG, "Current data: null")
+                mSelectedProfile.value = null
+            }
+        })
     }
 
     fun setSortField(field: Field) {
@@ -96,7 +112,7 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
         toast.show()
     }
 
-    private fun buildQuery() : Query {
+    private fun buildAllProfilesQuery() : Query {
         return when(mGender) {
             Filter.DEFAULT -> mFireStore.orderBy(mField.toString(),mDirection)
             Filter.MALE, Filter.FEMALE -> mFireStore.whereEqualTo("gender",mGender.toString()).orderBy(mField.toString(),mDirection)
@@ -105,7 +121,7 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
 
     fun queryProfiles() {
         mRegistration.remove() // Clear previous listener
-        val mQuery = buildQuery()
+        val mQuery = buildAllProfilesQuery()
         mRegistration = mQuery
             .addSnapshotListener { snapshot, e ->
             if( e != null ) {
