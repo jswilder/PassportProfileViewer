@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/include"
-        layout="@layout/recycler_filter_header"
+        layout="@layout/recycler_list_filter_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/list_item_height"
         app:layout_constraintBottom_toTopOf="@+id/recycler_profiles"
@@ -29,17 +29,10 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_new_profile"
+        style="@style/FabStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/fab_margin"
-        android:layout_marginTop="@dimen/fab_margin"
-        android:layout_marginEnd="@dimen/fab_margin"
-        android:layout_marginBottom="@dimen/fab_margin"
-        android:clickable="true"
-        android:focusable="true"
         android:src="@drawable/ic_add_person"
-        android:tint="@android:color/white"
-        app:backgroundTintMode="src_over"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

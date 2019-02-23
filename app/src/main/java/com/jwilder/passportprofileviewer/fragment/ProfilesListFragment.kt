@@ -16,7 +16,7 @@ import com.jwilder.passportprofileviewer.adapter.ProfileListAdapter
 import com.jwilder.passportprofileviewer.classes.Field
 import com.jwilder.passportprofileviewer.viewmodel.ProfilesViewModel
 import kotlinx.android.synthetic.main.profiles_list_fragment.*
-import kotlinx.android.synthetic.main.recycler_filter_header.*
+import kotlinx.android.synthetic.main.recycler_list_filter_bar.*
 import java.lang.Exception
 
 class ProfilesListFragment : Fragment() {

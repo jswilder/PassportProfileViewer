@@ -1,16 +1,15 @@
 package com.jwilder.passportprofileviewer.viewmodel
 
 import android.app.Application
-import android.util.Log
 import android.view.Gravity
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.*
+import com.jwilder.passportprofileviewer.R
 import com.jwilder.passportprofileviewer.classes.Field
 import com.jwilder.passportprofileviewer.classes.Filter
 import com.jwilder.passportprofileviewer.classes.Profile
-import java.lang.Exception
 
 @Suppress("PrivatePropertyName")
 class ProfilesViewModel(application: Application) : AndroidViewModel(application) {
@@ -48,45 +47,29 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
 
     fun getSelectedProfile() = mSelectedProfile
     fun getProfiles() = mProfiles
+    fun getField() = mField
 
     fun getFilterLabel() : String {
-        // TODO Get string resource working for better internationalization
         return when(mGender) {
-            Filter.DEFAULT -> "MF" // getApplication<Application>().resources.getString(R.string.mf)
-            Filter.FEMALE -> "F"
-            Filter.MALE -> "M"
+            Filter.DEFAULT -> getApplication<Application>().getString(R.string.mf)
+            Filter.FEMALE ->  getApplication<Application>().getString(R.string.f)
+            Filter.MALE -> getApplication<Application>().getString(R.string.m)
         }
     }
 
     fun getFieldLabel() : String {
         val arrow = if(mDirection == Query.Direction.ASCENDING) "\u2191" else "\u2193"
-        return "$arrow ${mField.label}"
+        return when(mField) {
+            Field.UID -> "$arrow ${getApplication<Application>().getString(R.string.id)}"
+            Field.AGE -> "$arrow ${getApplication<Application>().getString(R.string.age)}"
+            Field.NAME -> "$arrow ${getApplication<Application>().getString(R.string.name)}"
+        }
     }
-
-    fun getField() = mField
 
     fun setDefaultsFilterSort() {
         mGender = Filter.DEFAULT
         mField = Field.UID
         mDirection = Query.Direction.ASCENDING
-    }
-
-    fun setSelectedProfile(profile: Profile) {
-        mRegistrationProfile.remove()
-        mRegistrationProfile = mFireStore.document(profile.queryId.toString())
-            .addSnapshotListener(EventListener<DocumentSnapshot> { snapshot, e ->
-            if (e != null) {
-                Log.w(TAG, "Listen failed.", e)
-                return@EventListener
-            }
-            if (snapshot != null && snapshot.exists()) {
-                Log.d(TAG, "Current data: " + snapshot.data)
-                mSelectedProfile.value = Profile(snapshot)
-            } else {
-                Log.d(TAG, "Current data: null")
-                mSelectedProfile.value = null
-            }
-        })
     }
 
     fun setSortField(field: Field) {
@@ -112,6 +95,21 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
         toast.show()
     }
 
+    fun setSelectedProfile(profile: Profile) {
+        mRegistrationProfile.remove()
+        mRegistrationProfile = mFireStore.document(profile.queryId.toString())
+            .addSnapshotListener(EventListener<DocumentSnapshot> { snapshot, exception ->
+                if (exception != null) {
+                    return@EventListener
+                }
+                if (snapshot != null && snapshot.exists()) {
+                    mSelectedProfile.value = Profile(snapshot)
+                } else {
+                    mSelectedProfile.value = null
+                }
+            })
+    }
+
     private fun buildAllProfilesQuery() : Query {
         return when(mGender) {
             Filter.DEFAULT -> mFireStore.orderBy(mField.toString(),mDirection)
@@ -123,32 +121,16 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
         mRegistration.remove() // Clear previous listener
         val mQuery = buildAllProfilesQuery()
         mRegistration = mQuery
-            .addSnapshotListener { snapshot, e ->
-            if( e != null ) {
-                Log.w(TAG, "Collection Listen Failed", e)
-            }
-            val profiles: MutableList<Profile> = mutableListOf()
-            for(document in snapshot!!) {
-                try {
-                    profiles.add(Profile(document))
-                    mFireStore.document(document.id)
-                        .addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
-                            if(firebaseFirestoreException != null) {
-                                Log.w(TAG, "Listen failed.",firebaseFirestoreException)
-                                return@addSnapshotListener
-                            }
-                            if(documentSnapshot != null && documentSnapshot.exists()) {
-                                Log.d(TAG, "Current data: ${documentSnapshot.data}")
-                            } else {
-                                Log.d(TAG, "Current data: NULL")
-                            }
-                        }
-                } catch (e: Exception) {
-                    Log.w(TAG,"Failed to convert.",e)
+            .addSnapshotListener(EventListener<QuerySnapshot> { querySnapshot, firestoreException ->
+                if (firestoreException != null) {
+                    return@EventListener
                 }
-            }
-            mProfiles.value = profiles
-        }
+                val profiles: MutableList<Profile> = mutableListOf()
+                for (doc in querySnapshot!!) {
+                    profiles.add(Profile(doc))
+                }
+                mProfiles.value = profiles
+            })
     }
 
     fun submitProfileChangeDB(hobbies: String) {
@@ -158,11 +140,10 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
                 .set(mapOf("hobbies" to hobbies), SetOptions.merge())
                 .addOnSuccessListener {
                     mSelectedProfile.value?.hobbies = hobbies
-                    setToastTextAndShow("Changes Saved")
+                    setToastTextAndShow(getApplication<Application>().getString(R.string.success_save_profile))
                 }
-                .addOnFailureListener { e ->
-                    Log.w(TAG,"Changes failed to save.",e)
-                    setToastTextAndShow("Failed to Save Changes")
+                .addOnFailureListener {
+                    setToastTextAndShow(getApplication<Application>().getString(R.string.fail_save_profile))
                 }
         }
     }
@@ -171,13 +152,11 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
         profile.uid = profile.uid - TIME
         mFireStore
             .add(profile.toMap())
-            .addOnSuccessListener { documentReference ->
-                Log.d(TAG,"Document written with ID: ${documentReference.id}")
-                setToastTextAndShow("Profile Added")
+            .addOnSuccessListener {
+                setToastTextAndShow(getApplication<Application>().getString(R.string.success_add_profile))
             }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error adding document.",exception)
-                setToastTextAndShow("Failed to Add Profile")
+            .addOnFailureListener {
+                setToastTextAndShow(getApplication<Application>().getString(R.string.fail_add_profile))
             }
     }
 
@@ -187,14 +166,11 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
                 .document(profile.queryId!!)
                 .delete()
                 .addOnSuccessListener {
-                    Log.d(TAG,"${profile.queryId} deleted")
-                    setToastTextAndShow("Profile Deleted")
+                    setToastTextAndShow(getApplication<Application>().getString(R.string.success_delete_profile))
                     mSelectedProfile.value = null
-                    // TODO Disable "save" button when delete succeeds
                 }
-                .addOnFailureListener { e ->
-                    Log.w(TAG,"Error deleting profile ${profile.queryId}",e)
-                    setToastTextAndShow("Failed to Delete Profile")
+                .addOnFailureListener {
+                    setToastTextAndShow(getApplication<Application>().getString(R.string.fail_delete_profile))
                 }
         }
     }

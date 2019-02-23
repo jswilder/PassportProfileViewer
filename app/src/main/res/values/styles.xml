@@ -1,51 +1,44 @@
 <resources>
 
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="TextProfileHeaderStyle" parent="TextAppearance.MaterialComponents.Headline4" >
+    <style name="ProfileViewTextStyle">
         <item name="android:textColor">@color/white</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="NameStyle" parent="ProfileViewTextStyle" >
         <item name="android:textStyle">bold</item>
-        <item name="android:ellipsize">end</item>
-        <item name="android:maxLines">1</item>
         <item name="fontFamily">@font/roboto_mono</item>
+        <item name="android:textSize">28sp</item>
     </style>
 
-    <style name="TextProfileSubheaderStyle" parent="TextAppearance.MaterialComponents.Headline6" >
-        <item name="android:textColor">@color/white</item>
-        <!--<item name="android:textStyle">b</item>-->
-        <item name="android:ellipsize">end</item>
-        <item name="android:maxLines">1</item>
+    <style name="DetailsStyle" parent="ProfileViewTextStyle">
         <item name="fontFamily">@font/roboto_mono</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
-    <style name="TextProfileSubheaderThinStyle" parent="TextAppearance.MaterialComponents.Headline6" >
-        <item name="android:textColor">@color/white</item>
+    <style name="SubheaderStyle" parent="DetailsStyle" >
         <item name="android:textStyle">italic</item>
-        <item name="android:ellipsize">end</item>
-        <item name="android:maxLines">1</item>
-        <item name="fontFamily">@font/roboto_mono_thin</item>
+        <item name="fontFamily">@font/roboto_mono</item>
     </style>
 
-    <style name="ButtonProfileStyle" parent="Base.Widget.AppCompat.Button">
-        <item name="android:textColor">@color/colorPrimaryDark</item>
-        <item name="android:background">@color/white</item>
+    <style name="FabStyle" >
+        <item name="android:tint">@color/white</item>
+        <item name="android:layout_margin">@dimen/fab_margin</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
     </style>
 
-    <style name="ListItemStyle">
-        <item name="android:textColor">@color/colorPrimaryDark</item>
-        <item name="android:background">@color/white</item>
+    <style name="ProfilesList">
         <item name="android:textSize">14sp</item>
-        <item name="android:tint">@color/colorPrimaryDark</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:textAlignment">viewStart</item>
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingStart">16dp</item>
         <item name="android:paddingEnd">16dp</item>
         <item name="android:ellipsize">end</item>
@@ -54,36 +47,21 @@
         <item name="android:fontFamily">@font/roboto_mono</item>
     </style>
 
-    <style name="ListFilterStyle">
+    <style name="ListItemStyle" parent="ProfilesList">
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:tint">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="ListFilterStyle" parent="ProfilesList">
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@color/colorPrimary</item>
-        <item name="android:textSize">14sp</item>
         <item name="android:tint">@color/white</item>
-        <item name="android:layout_gravity">center</item>
-        <item name="android:textAlignment">viewStart</item>
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingStart">16dp</item>
-        <item name="android:paddingEnd">16dp</item>
-        <item name="android:ellipsize">end</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:elevation">0dp</item>
-        <item name="android:fontFamily">@font/roboto_mono</item>
     </style>
 
-    <style name="NewProfileLabel">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:layout_gravity">left</item>
-        <item name="android:paddingStart">16dp</item>
-        <item name="android:paddingEnd">16dp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:ellipsize">end</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:textSize">16dp</item>
-        <item name="android:fontFamily">@font/roboto_mono</item>
+    <style name="TextInputLayoutStyle" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="errorTextAppearance">@style/TextAppearance.Design.Error</item>
     </style>
-
-    <style name="TextInputLayoutStyle" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" />
 
     <style name="TextInputEditTextStyle" parent="@style/ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox" />
 

@@ -8,16 +8,16 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_name"
-        style="@style/TextProfileHeaderStyle"
+        style="@style/NameStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/none"
-        android:textAppearance="@style/TextProfileHeaderStyle"
         app:layout_constraintBottom_toTopOf="@+id/text_age"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_delete_profile"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
@@ -25,27 +25,27 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_age"
-        style="@style/TextProfileSubheaderStyle"
+        style="@style/DetailsStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/zero"
         app:layout_constraintBottom_toBottomOf="@+id/text_gender"
-        app:layout_constraintEnd_toEndOf="@+id/text_name"
+        app:layout_constraintEnd_toEndOf="@+id/btn_delete_profile"
         app:layout_constraintStart_toEndOf="@+id/text_gender"
         app:layout_constraintTop_toTopOf="@+id/text_gender"
         tools:text="99" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_gender"
-        style="@style/TextProfileSubheaderStyle"
+        style="@style/DetailsStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/none"
-        android:textAppearance="@style/TextProfileHeaderStyle"
         app:layout_constraintBottom_toTopOf="@+id/text_hobbies_label"
         app:layout_constraintEnd_toStartOf="@+id/text_age"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/text_name"
         app:layout_constraintTop_toBottomOf="@+id/text_name"
         app:layout_constraintVertical_bias="0.0"
@@ -53,13 +53,15 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_hobbies_label"
-        style="@style/TextProfileSubheaderThinStyle"
+        style="@style/SubheaderStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/hobbies"
         app:layout_constraintBottom_toTopOf="@+id/frameLayout"
-        app:layout_constraintEnd_toEndOf="@+id/text_name"
+        app:layout_constraintEnd_toEndOf="@+id/btn_delete_profile"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/text_gender"
         app:layout_constraintTop_toBottomOf="@+id/text_gender" />
 
@@ -67,8 +69,10 @@
         android:id="@+id/frameLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_delete_profile"
-        app:layout_constraintEnd_toEndOf="@+id/text_name"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btn_delete_profile"
         app:layout_constraintStart_toStartOf="@+id/text_name"
         app:layout_constraintTop_toBottomOf="@+id/text_hobbies_label">
 
@@ -90,33 +94,29 @@
 
     </FrameLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_delete_profile"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/delete"
-        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_save_changes"
-        app:layout_constraintStart_toStartOf="@+id/text_name"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_save_changes"
-        android:layout_width="0dp"
+        style="@style/FabStyle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/save"
-        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_delete_profile"
-        app:layout_constraintEnd_toEndOf="@+id/text_name"
-        app:layout_constraintStart_toEndOf="@+id/btn_delete_profile"
-        app:layout_constraintTop_toTopOf="@+id/btn_delete_profile" />
+        android:src="@drawable/ic_save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/btn_delete_profile"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="16dp"
+        android:tint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/text_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/text_name"
+        app:layout_constraintTop_toTopOf="@+id/text_name"
+        app:srcCompat="@drawable/ic_delete" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

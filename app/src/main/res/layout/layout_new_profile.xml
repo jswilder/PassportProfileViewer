@@ -28,7 +28,6 @@
                 android:layout_marginBottom="8dp"
                 android:hint="@string/name"
                 app:errorEnabled="false"
-                app:errorTextAppearance="@style/TextAppearance.Design.Error"
                 app:hintAnimationEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -54,7 +53,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                app:errorTextAppearance="@style/TextAppearance.Design.Error"
                 android:hint="@string/age">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -107,15 +105,10 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_save_new_profile"
+        style="@style/FabStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/fab_margin"
-        android:layout_marginTop="@dimen/fab_margin"
-        android:layout_marginEnd="@dimen/fab_margin"
-        android:layout_marginBottom="@dimen/fab_margin"
-        android:background="@color/femalePink"
         android:src="@drawable/ic_save"
-        android:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

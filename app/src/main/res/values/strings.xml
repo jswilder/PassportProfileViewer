@@ -8,8 +8,6 @@
     <string name="none">None</string>
     <string name="zero">0</string>
     <string name="name">Name</string>
-    <string name="name_desc">\u2193 Name</string>
-    <string name="name_asc">\u2191 Name</string>
     <string name="mf">MF</string>
     <string name="m">M</string>
     <string name="f">F</string>
@@ -17,25 +15,29 @@
     <string name="female">Female</string>
     <string name="filter_icon">filter icon</string>
     <string name="age">Age</string>
-    <string name="age_asc">\u2191 Age</string>
-    <string name="age_desc">\u2193 Age</string>
     <string name="gender">Gender</string>
     <string name="image">Image</string>
     <string name="cancel">Cancel</string>
     <string name="discard">Discard</string>
     <string name="id">Id</string>
-    <string name="id_asc">\u2191 Id</string>
-    <string name="id_desc">\u2193 Id</string>
     <string name="profile_image_preview">Profile image preview</string>
     <string name="image_url">Image URL</string>
+    <string name="dialog_confirm_delete">Are you sure you want to delete this profile?</string>
+
     <string name="error_name_required">Name Required</string>
     <string name="error_age_required">Age Required</string>
-    <string name="dialog_confirm_delete">Are you sure you want to delete this profile?</string>
+
+    <string name="fail_delete_profile">Failed to Delete Profile</string>
+    <string name="fail_add_profile">Failed to Delete Profile</string>
+    <string name="fail_save_profile">Failed to Save Changes</string>
+
+    <string name="success_delete_profile">Profile Deleted</string>
+    <string name="success_add_profile">Profile Added</string>
+    <string name="success_save_profile">Changes Saved</string>
+
+
     <string-array name="string_array_genders">
         <item>male</item>
         <item>female</item>
     </string-array>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
