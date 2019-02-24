@@ -9,7 +9,7 @@ import com.google.firebase.firestore.*
 import com.jwilder.passportprofileviewer.R
 import com.jwilder.passportprofileviewer.classes.Field
 import com.jwilder.passportprofileviewer.classes.Filter
-import com.jwilder.passportprofileviewer.classes.Profile
+import com.jwilder.passportprofileviewer.classes.FirestoreProfile
 /*
     Viewmodel used for all application data;
     Holds a reference to the firestore instance and is responsible for all queries/listeners
@@ -23,8 +23,8 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
     private val TIME: Long = 1_548_997_200_000         // Feb 1, 2019 in ms; Used to shorten Uid length
 
     /*  Observable Fields   */
-    private val mProfiles: MutableLiveData<MutableList<Profile>> = MutableLiveData()
-    private val mSelectedProfile = MutableLiveData<Profile>()
+    private val mProfiles: MutableLiveData<MutableList<FirestoreProfile>> = MutableLiveData()
+    private val mSelectedProfile = MutableLiveData<FirestoreProfile>()
 
     /*  FireStore   */
     private val mFireStore: CollectionReference = FirebaseFirestore.getInstance().collection(COLLECTION)
@@ -96,7 +96,7 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
         toast.show()
     }
 
-    fun setSelectedProfile(profile: Profile) {
+    fun setSelectedProfile(profile: FirestoreProfile) {
         @Suppress("UNNECESSARY_SAFE_CALL")
         mRegistrationProfile?.remove()
         mRegistrationProfile = mFireStore.document(profile.queryId.toString())
@@ -105,7 +105,7 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
                     return@EventListener
                 }
                 if (snapshot != null && snapshot.exists()) {
-                    mSelectedProfile.value = Profile(snapshot)
+                    mSelectedProfile.value = FirestoreProfile(snapshot)
                 } else {
                     mSelectedProfile.value = null
                 }
@@ -128,9 +128,9 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
                 if (firestoreException != null) {
                     return@EventListener
                 }
-                val profiles: MutableList<Profile> = mutableListOf()
+                val profiles: MutableList<FirestoreProfile> = mutableListOf()
                 for (doc in querySnapshot!!) {
-                    profiles.add(Profile(doc))
+                    profiles.add(FirestoreProfile(doc))
                 }
                 mProfiles.value = profiles
             })
@@ -151,7 +151,7 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    fun createNewProfileDB(profile: Profile) {
+    fun createNewProfileDB(profile: FirestoreProfile) {
         profile.uid = profile.uid - TIME
         mFireStore
             .add(profile.toMap())
@@ -163,7 +163,7 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
             }
     }
 
-    fun deleteSelectedProfileDB(profile: Profile) {
+    fun deleteSelectedProfileDB(profile: FirestoreProfile) {
         if(profile.queryId != null) {
             mFireStore
                 .document(profile.queryId!!)

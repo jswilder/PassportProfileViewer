@@ -10,7 +10,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot
  */
 
 @IgnoreExtraProperties
-data class Profile(
+data class FirestoreProfile(
     var queryId: String? = "",
     var name: String? = "",
     var hobbies: String? = "",

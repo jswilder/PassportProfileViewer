@@ -7,13 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat.getColor
-import androidx.core.content.ContextCompat.getColorStateList
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 
 import com.jwilder.passportprofileviewer.R
-import com.jwilder.passportprofileviewer.classes.Profile
+import com.jwilder.passportprofileviewer.classes.FirestoreProfile
 import com.jwilder.passportprofileviewer.viewmodel.ProfilesViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.layout_profile.*
@@ -61,16 +60,16 @@ class ProfileViewFragment : Fragment() {
         }
     }
 
-    private fun updateUI(profile: Profile) {
+    private fun updateUI(profile: FirestoreProfile) {
         text_name.text = profile.name
         text_age.text = profile.age.toString()
         when(profile.gender) {
-            Profile.GENDER.MALE -> {
+            FirestoreProfile.GENDER.MALE -> {
                 text_gender.text = getString(R.string.male)
                 view_background.setBackgroundColor(getColor(activity!!,R.color.maleBlue))
                 btn_save_changes.backgroundTintList = ColorStateList.valueOf(getColor(activity!!,R.color.femalePink))
             }
-            Profile.GENDER.FEMALE -> {
+            FirestoreProfile.GENDER.FEMALE -> {
                 text_gender.text = getString(R.string.female)
                 view_background.setBackgroundColor(getColor(activity!!,R.color.femalePink))
                 btn_save_changes.backgroundTintList = ColorStateList.valueOf(getColor(activity!!,R.color.maleBlue))

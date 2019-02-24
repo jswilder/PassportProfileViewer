@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 
 import com.jwilder.passportprofileviewer.R
-import com.jwilder.passportprofileviewer.classes.Profile
+import com.jwilder.passportprofileviewer.classes.FirestoreProfile
 import com.jwilder.passportprofileviewer.viewmodel.ProfilesViewModel
 import kotlinx.android.synthetic.main.layout_new_profile.*
 import java.lang.Exception
@@ -72,13 +72,13 @@ class NewProfileFragment : Fragment() {
         text_input_image.setText("")
     }
 
-    private fun getProfileFromInputs() : Profile {
+    private fun getProfileFromInputs() : FirestoreProfile {
         val name = if (text_input_name.text.toString() != "") text_input_name.text.toString() else "None"
         val hobbies = if (text_input_hobbies.text.toString() != "") text_input_hobbies.text.toString() else "None"
         val age = if (text_input_age.text.toString() != "") text_input_age.text.toString().toLong() else 0
         val image = if (text_input_image.text.toString() != "") text_input_image.text.toString() else "None"
-        val gender = if ( spinner_gender.selectedItem.toString() == "male" ) Profile.GENDER.MALE else Profile.GENDER.FEMALE
+        val gender = if ( spinner_gender.selectedItem.toString() == "male" ) FirestoreProfile.GENDER.MALE else FirestoreProfile.GENDER.FEMALE
         val uid = Date().time
-        return Profile(name = name, hobbies = hobbies, age = age, image = image, gender = gender, uid = uid)
+        return FirestoreProfile(name = name, hobbies = hobbies, age = age, image = image, gender = gender, uid = uid)
     }
 }
