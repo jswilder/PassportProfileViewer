@@ -44,10 +44,15 @@ class ProfilesListFragment : Fragment() {
             ViewModelProviders.of(this).get(ProfilesViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
 
+        showLoadingCircle()
+
         mDivider = DividerItemDecoration(context,1)
         mAdapter = ProfileListAdapter(context!!,mViewModel)
         mViewModel.getProfiles().observe( this, Observer { profiles ->
-            profiles?.let { mAdapter.setProfiles(profiles) }
+            profiles?.let {
+                mAdapter.setProfiles(profiles)
+                hideLoadingCircle()
+            }
         })
 
         recycler_profiles.adapter = mAdapter
@@ -76,12 +81,14 @@ class ProfilesListFragment : Fragment() {
 
     private fun initListeners() {
         text_gender.setOnClickListener {
+            showLoadingCircle()
             mViewModel.setGenderFilter()
             mViewModel.queryProfiles()
             text_gender.text = mViewModel.getFilterLabel()
         }
 
         text_id.setOnClickListener {
+            showLoadingCircle()
             mViewModel.setSortField(Field.UID)
             clearLabels()
             text_id.text = mViewModel.getFieldLabel()
@@ -89,6 +96,7 @@ class ProfilesListFragment : Fragment() {
         }
 
         text_name.setOnClickListener {
+            showLoadingCircle()
             mViewModel.setSortField(Field.NAME)
             clearLabels()
             text_name.text = mViewModel.getFieldLabel()
@@ -96,6 +104,7 @@ class ProfilesListFragment : Fragment() {
         }
 
         text_age.setOnClickListener {
+            showLoadingCircle()
             mViewModel.setSortField(Field.AGE)
             clearLabels()
             text_age.text = mViewModel.getFieldLabel()
@@ -103,6 +112,7 @@ class ProfilesListFragment : Fragment() {
         }
 
         image_clear_filter.setOnClickListener {
+            showLoadingCircle()
             mViewModel.setDefaultsFilterSort()
             clearLabels()
             text_id.text = mViewModel.getFieldLabel()
@@ -113,5 +123,13 @@ class ProfilesListFragment : Fragment() {
         fab_new_profile.setOnClickListener {
             findNavController().navigate(R.id.action_profilesListFragment_to_newProfileFragment)
         }
+    }
+
+    private fun hideLoadingCircle() {
+        loading_circle.visibility = View.GONE
+    }
+
+    private fun showLoadingCircle() {
+        loading_circle.visibility = View.VISIBLE
     }
 }
