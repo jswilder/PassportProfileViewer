@@ -37,15 +37,11 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
     private lateinit var mField: Field
     private lateinit var mDirection: Query.Direction
 
-    private var toast: Toast
-
     init {
         setDefaultsFilterSort()
         mQuery = buildAllProfilesQuery()
-        mRegistration = ListenerRegistration {  }
-        mRegistrationProfile = ListenerRegistration {  }
-        toast = Toast.makeText(getApplication<Application>(),"",Toast.LENGTH_SHORT)
-        toast.setGravity(Gravity.CENTER,0,0)
+        mRegistration = ListenerRegistration {}
+        mRegistrationProfile = ListenerRegistration {}
         queryProfiles()
     }
 
@@ -95,12 +91,14 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
     }
 
     private fun setToastTextAndShow(message: String) {
-        toast.setText(message)
+        val toast = Toast.makeText(getApplication<Application>(),message,Toast.LENGTH_SHORT)
+        toast.setGravity(Gravity.CENTER,0,0)
         toast.show()
     }
 
     fun setSelectedProfile(profile: Profile) {
-        mRegistrationProfile.remove()
+        @Suppress("UNNECESSARY_SAFE_CALL")
+        mRegistrationProfile?.remove()
         mRegistrationProfile = mFireStore.document(profile.queryId.toString())
             .addSnapshotListener(EventListener<DocumentSnapshot> { snapshot, exception ->
                 if (exception != null) {
@@ -122,7 +120,8 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun queryProfiles() {
-        mRegistration.remove() // Clear previous listener
+        @Suppress( "UNNECESSARY_SAFE_CALL")
+        mRegistration?.remove() // Clear previous listener
         val mQuery = buildAllProfilesQuery()
         mRegistration = mQuery
             .addSnapshotListener(EventListener<QuerySnapshot> { querySnapshot, firestoreException ->
