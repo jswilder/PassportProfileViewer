@@ -11,10 +11,12 @@ import com.jwilder.passportprofileviewer.R
 import com.jwilder.passportprofileviewer.classes.Profile
 import com.jwilder.passportprofileviewer.viewmodel.ProfilesViewModel
 import kotlinx.android.synthetic.main.layout_new_profile.*
-import kotlinx.android.synthetic.main.new_profile_fragment.*
 import java.lang.Exception
 import java.util.*
 
+/*
+    Fragment for creating a new profile
+ */
 class NewProfileFragment : Fragment() {
 
     private val TAG = "NewProfileFragment"
@@ -36,7 +38,7 @@ class NewProfileFragment : Fragment() {
 
         btn_save_new_profile.setOnClickListener {
             if(areSaveCriteriaMet()) {
-                mViewModel.addNewProfileDB(getProfileFromInputs())
+                mViewModel.createNewProfileDB(getProfileFromInputs())
                 clearAllInputs()
             }
         }

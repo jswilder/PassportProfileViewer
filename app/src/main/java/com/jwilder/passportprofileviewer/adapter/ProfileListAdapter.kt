@@ -45,7 +45,6 @@ class ProfileListAdapter internal constructor(private val context: Context, priv
         holder.profileGenderIcon.drawable.setTint( color )
         holder.itemView.setOnClickListener {
             model.setSelectedProfile(profiles[position])
-            Log.w(TAG,"${profiles[position].uid} + ${profiles[position].name}")
             it.findNavController().navigate(R.id.action_profilesListFragment_to_profileViewFragment)
         }
     }

@@ -20,6 +20,9 @@ import kotlinx.android.synthetic.main.layout_profile.*
 import kotlinx.android.synthetic.main.profile_view_fragment.*
 import java.lang.Exception
 
+/*
+    Fragment that shows the currently selected profile
+ */
 class ProfileViewFragment : Fragment() {
 
     private val TAG = "ProfileViewFragment"

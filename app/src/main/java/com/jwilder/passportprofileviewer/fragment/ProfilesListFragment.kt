@@ -19,6 +19,10 @@ import kotlinx.android.synthetic.main.profiles_list_fragment.*
 import kotlinx.android.synthetic.main.recycler_list_filter_bar.*
 import java.lang.Exception
 
+/*
+    Primary fragment; Shows a list of all profiles matching the current
+    filter/sort options
+ */
 class ProfilesListFragment : Fragment() {
 
     private val TAG = "ProfileListFragment"

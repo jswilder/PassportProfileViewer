@@ -10,7 +10,11 @@ import com.jwilder.passportprofileviewer.R
 import com.jwilder.passportprofileviewer.classes.Field
 import com.jwilder.passportprofileviewer.classes.Filter
 import com.jwilder.passportprofileviewer.classes.Profile
-
+/*
+    Viewmodel used for all application data;
+    Holds a reference to the firestore instance and is responsible for all queries/listeners
+    **I left those in here due to it being a relatively small amount of code/logic**
+ */
 @Suppress("PrivatePropertyName")
 class ProfilesViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -148,7 +152,7 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    fun addNewProfileDB(profile: Profile) {
+    fun createNewProfileDB(profile: Profile) {
         profile.uid = profile.uid - TIME
         mFireStore
             .add(profile.toMap())
@@ -160,7 +164,7 @@ class ProfilesViewModel(application: Application) : AndroidViewModel(application
             }
     }
 
-    fun deleteProfileDB(profile: Profile) {
+    fun deleteSelectedProfileDB(profile: Profile) {
         if(profile.queryId != null) {
             mFireStore
                 .document(profile.queryId!!)

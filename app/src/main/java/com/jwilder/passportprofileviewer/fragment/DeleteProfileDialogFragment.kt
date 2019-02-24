@@ -10,6 +10,10 @@ import com.jwilder.passportprofileviewer.R
 import com.jwilder.passportprofileviewer.viewmodel.ProfilesViewModel
 import java.lang.Exception
 
+/*
+    Dialog fragment used to confirm/cancel a delete request for
+    the selected profile
+ */
 class DeleteProfileDialogFragment : DialogFragment() {
 
     @Suppress("PropertyName")
@@ -22,13 +26,12 @@ class DeleteProfileDialogFragment : DialogFragment() {
         } ?: throw Exception("Invalid Activity")
 
         return activity?.let {
-            // Use the Builder class for convenient dialog construction
             val builder = AlertDialog.Builder(it)
             builder.setMessage(R.string.dialog_confirm_delete)
                 .setPositiveButton(R.string.delete
                 ) { dialog, id ->
                     if(mViewModel.getSelectedProfile().value != null)
-                        mViewModel.deleteProfileDB(mViewModel.getSelectedProfile().value!!)
+                        mViewModel.deleteSelectedProfileDB(mViewModel.getSelectedProfile().value!!)
                     dialog.dismiss()
                 }
                 .setNegativeButton(R.string.cancel
